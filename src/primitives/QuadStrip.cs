@@ -1,4 +1,6 @@
 
+using Silk.NET.Maths;
+
 namespace Drvv.Primitives;
 
 record QuadStrip<T>(List<Quad<T>> Quads) : IHighOrderPrimitive<Quad<T>>, IOutlineable<T>
@@ -16,9 +18,44 @@ record QuadStrip<T>(List<Quad<T>> Quads) : IHighOrderPrimitive<Quad<T>>, IOutlin
     yield return Quads.Last().Right;
   }
 
-  public static QuadStrip<T> Arc(float from, float to, float top, float bottom, float resolution)
+  /// <summary> 
+  /// Generates arc from quads
+  /// </summary>
+  public static QuadStrip<Vector2D<float>> GenerateArc(
+    float start_angle, float end_angle,
+    float inner_radius, float outer_radius,
+    float resolution)
   {
-    throw new NotImplementedException();
+    return new(
+      new List<Quad<Vector2D<float>>>(GenerateArcQuads(inner_radius, outer_radius, start_angle, end_angle, resolution))
+    );
+  }
+
+  private static IEnumerable<Quad<Vector2D<float>>> GenerateArcQuads(float inner_r, float outer_r, float angle1, float angle2, float res)
+  {
+    float k = 1.0f / res;
+    while (angle1 < angle2)
+    {
+      yield return (new(
+        new(
+          MathF.Sin(angle1) * inner_r,
+          MathF.Cos(angle1) * inner_r
+        ),
+        new(
+          MathF.Sin(angle1) * outer_r,
+          MathF.Cos(angle1) * outer_r
+        ),
+        new(
+          MathF.Sin(MathF.Min(angle1 + k, angle2)) * outer_r,
+          MathF.Cos(MathF.Min(angle1 + k, angle2)) * outer_r
+        ),
+        new(
+          MathF.Sin(MathF.Min(angle1 + k, angle2)) * inner_r,
+          MathF.Cos(MathF.Min(angle1 + k, angle2)) * inner_r
+        )
+      ));
+      angle1 += k;
+    }
   }
 }
 

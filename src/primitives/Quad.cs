@@ -9,9 +9,9 @@ record Quad<T>(T P1, T P2, T P3, T P4) : IHighOrderPrimitive<Triangle<T>>
     yield return new Triangle<T>(P3, P4, P1);
   }
 
-  public Line<T> Left => throw new NotImplementedException();
-  public Line<T> Right => throw new NotImplementedException();
-  public Line<T> Top => throw new NotImplementedException();
-  public Line<T> Bottom => throw new NotImplementedException();
+  public Line<T> Left => new(P1, P2);
+  public Line<T> Right => new(P3, P4);
+  public Line<T> Top => new(P2, P3);
+  public Line<T> Bottom => new(P1, P4);
 }
 
