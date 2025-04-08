@@ -13,5 +13,8 @@ class App
 
   public void Apply()
   {
+    int selection = Model.Selection.SelectedIndex;
+    ImGui.InputInt("Selection", ref selection, 1, 5);
+    Model.Selection.SelectedIndex = selection;
   }
 }

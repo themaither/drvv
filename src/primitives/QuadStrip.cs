@@ -18,6 +18,15 @@ record QuadStrip<T>(List<Quad<T>> Quads) : IHighOrderPrimitive<Quad<T>>, IOutlin
     yield return Quads.Last().Right;
   }
 
+  public QuadStrip<U> TransformType<U>(Func<T, U> transform)
+  {
+    return new QuadStrip<U>(
+      Quads
+        .Select(a => a.TransformType<U>(transform))
+        .ToList()
+    );
+  }
+
   /// <summary> 
   /// Generates arc from quads
   /// </summary>
