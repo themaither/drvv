@@ -23,7 +23,7 @@ class Disk : IRendererFor<Model.Disk>
 
   public void Render()
   {
-    var pri = Primitives.Disk<Vector2D<float>>.Generate(0.1f, 0.6f, 16, 64, 12f);
+    var pri = Primitives.Disk<Vector2D<float>>.Generate(0.1f, 0.9f, 16, 64, 12f);
     var color = new Color3<float>(0f, 0f, 0f);
     var selectedColor = new Color3<float>(.2f, .3f, .4f);
     _vertexCtx.CommitTriangles(

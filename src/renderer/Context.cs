@@ -1,7 +1,9 @@
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Drvv.Model;
 using Drvv.Primitives;
+using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.OpenGL.Extensions.ImGui;
 
@@ -9,6 +11,7 @@ namespace Drvv.Renderer;
 
 class Context : IGLRendererContext, IVertexRendererContext
 {
+  private readonly Model.Screen _screen;
   private readonly List<Vertex> _triangles;
   private readonly List<Vertex> _lines;
   private uint _buffer;
@@ -40,15 +43,9 @@ class Context : IGLRendererContext, IVertexRendererContext
   }
   """;
 
-  private static float[] aspectRatioMatrix = [
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    0, 0, 0, 1,
-  ];
-
-  public Context(GL gl)
+  public Context(Model.Screen screen, GL gl)
   {
+    _screen = screen;
     GL = gl;
     _triangles = [];
     _lines = [];
@@ -108,7 +105,7 @@ class Context : IGLRendererContext, IVertexRendererContext
     GL.BindVertexArray(_vertexArray);
     GL.BindBuffer(GLEnum.ArrayBuffer, _buffer);
     var matUniform = GL.GetUniformLocation(_program, "aspectRatio");
-    GL.UniformMatrix4(matUniform, 1, false, aspectRatioMatrix);
+    GL.UniformMatrix4(matUniform, 1, false, _screen.ToMatrixArray());
     GL.BufferData<Vertex>(
       GLEnum.ArrayBuffer, 
       CollectionsMarshal.AsSpan(_triangles), GLEnum.StaticDraw
