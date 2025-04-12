@@ -1,5 +1,6 @@
 using System.Numerics;
 using ImGuiNET;
+using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL.Extensions.ImGui;
 
@@ -8,9 +9,11 @@ namespace Drvv.UI.For;
 class App
 {
   public Model.App Model { get; }
-  public App(Model.App model, ImGuiController context) 
+  private IInputContext _ctx;
+  public App(Model.App model, IInputContext context) 
   {
     Model = model;
+    _ctx = context;
   }
 
   public void Apply()
@@ -22,9 +25,10 @@ class App
     }
     {
       Vector2 pos = Model.Disk.Head.Target.ToSystem();
-      ImGui.DragFloat2("Pointer", ref pos, 0.01f, -2f, 2f);
+      pos = Model.Screen.ScreenToWorld(new Vector2D<float>(_ctx.Mice[0].Position.X, _ctx.Mice[0].Position.Y)).ToSystem();
       Model.Disk.Head.Target = new(pos.X, pos.Y);
     }
-
+    
+    
   }
 }

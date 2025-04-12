@@ -21,6 +21,8 @@ class Window
   public GL GL { get; set; }
   public Simulation.For.App Simulation { get; private set; }
 
+  public IInputContext InputContext { get; private set; }
+
   #pragma warning disable CS8618
   public Window(App model)
   {
@@ -28,9 +30,10 @@ class Window
     _handle.Load += () => {
       GL = _handle.CreateOpenGL();
       RenderContext = new(Model!.Screen, GL);
+      InputContext = _handle.CreateInput();
       Renderer = new Renderer.For.App(Model!, RenderContext, RenderContext);
-      UIContext = new(RenderContext.GL, _handle, _handle.CreateInput());
-      UI = new(Model!, UIContext);
+      UIContext = new(RenderContext.GL, _handle, InputContext);
+      UI = new(Model!, InputContext);
       Simulation = new(Model!);
       OnFramebufferResize(_handle.Size);
     };
@@ -56,6 +59,7 @@ class Window
   private void OnFramebufferResize(Vector2D<int> size)
   {
     Model!.Screen.AspectRatio = (float)size.X / size.Y;
+    Model!.Screen.Resolution = size;
     GL!.Viewport(size);
   }
 }
