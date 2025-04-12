@@ -22,7 +22,7 @@ class Disk : IRendererFor<Model.Disk>
   public void Render()
   {
     var pri = Primitives.Disk<Vector2D<float>>.Generate(
-      Model.InnerRadius, Model.OuterRadius, 
+      Model.InnerRadius, Model.OuterRadius, Model.Rotation,
       Model.Rows, Model.Columns, 12f
     );
     var color = new Color3<float>(0f, 0f, 0f);

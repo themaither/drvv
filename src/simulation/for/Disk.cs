@@ -17,5 +17,11 @@ class Disk
   public void Update(float deltaTime)
   {
     _head.Update(deltaTime);
+
+    //TODO: rewrite this abomination
+    if (Model.Rotation < 0)
+      Model.Rotation += MathF.PI * 2;
+    if (Model.Rotation > MathF.PI * 2)
+      Model.Rotation -= MathF.PI * 2;
   }  
 }

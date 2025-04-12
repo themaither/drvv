@@ -20,4 +20,6 @@ class Disk
   public uint Rows { get; set; }
 
   public uint Columns { get; set; }
+
+  public float Rotation { get; set; }
 }

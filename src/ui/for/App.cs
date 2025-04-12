@@ -28,7 +28,11 @@ class App
       pos = Model.Screen.ScreenToWorld(new Vector2D<float>(_ctx.Mice[0].Position.X, _ctx.Mice[0].Position.Y)).ToSystem();
       Model.Disk.Head.Target = new(pos.X, pos.Y);
     }
-    
+    {
+      float rotation = Model.Disk.Rotation;
+      ImGui.DragFloat("Rotation", ref rotation, 0.1f);
+      Model.Disk.Rotation = rotation;
+    }
     
   }
 }

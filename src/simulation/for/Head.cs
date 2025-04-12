@@ -24,6 +24,13 @@ class Head
     {
       angle = MathF.PI - angle + MathF.PI;
     }
+    
+    angle -= Model.Owner.Rotation;
+
+    if (angle < 0)
+    {
+      angle += MathF.PI * 2;
+    }
 
     float markedRow = 
       (distance - Model.Owner.InnerRadius) 
