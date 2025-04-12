@@ -4,14 +4,14 @@ class Disk
 {
   public Disk()
   {
-    Pointer = new() {Target = new(0f, 0.5f)};
+    Head = new(this) {Target = new(0f, 0.5f)};
     InnerRadius = 0.1f;
     OuterRadius = 0.9f;
     Rows = 8;
     Columns = 48;
   }
 
-  public Pointer Pointer { get; }
+  public Head Head { get; }
 
   public float InnerRadius { get; set; }
 

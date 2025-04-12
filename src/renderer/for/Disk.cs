@@ -51,7 +51,7 @@ class Disk : IRendererFor<Model.Disk>
 
     //Draw pointer
     _vertexCtx.CommitLines(
-      new Primitives.Cross(Model.Pointer.Target)
+      new Primitives.Cross(Model.Head.Target)
         .Lower()
         .SelectMany(a => a.Dissolve())
         .Select(a => new Vertex(a, new(1f, 0f, 0f)))

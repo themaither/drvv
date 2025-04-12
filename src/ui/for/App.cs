@@ -21,9 +21,9 @@ class App
       Model.Selection.SelectedIndex = selection;
     }
     {
-      Vector2 pos = Model.Disk.Pointer.Target.ToSystem();
+      Vector2 pos = Model.Disk.Head.Target.ToSystem();
       ImGui.DragFloat2("Pointer", ref pos, 0.01f, -2f, 2f);
-      Model.Disk.Pointer.Target = new(pos.X, pos.Y);
+      Model.Disk.Head.Target = new(pos.X, pos.Y);
     }
 
   }
