@@ -1,3 +1,5 @@
+using Silk.NET.Maths;
+
 namespace Drvv.Model;
 
 class App
@@ -14,4 +16,6 @@ class App
   public Selection Selection { get; set; }
 
   public Screen Screen { get; set; }
+
+  public Vector2D<float> Pointer { get; set; }
 }

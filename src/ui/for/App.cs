@@ -19,14 +19,14 @@ class App
   public void Apply()
   {
     {
+      Vector2 pos = Model.Disk.Head.Target.ToSystem();
+      pos = Model.Screen.ScreenToWorld(new Vector2D<float>(_ctx.Mice[0].Position.X, _ctx.Mice[0].Position.Y)).ToSystem();
+      Model.Pointer = new(pos.X, pos.Y);
+    }
+    {
       int selection = Model.Selection.SelectedIndex;
       ImGui.InputInt("Selection", ref selection, 1, 5);
       Model.Selection.SelectedIndex = selection;
-    }
-    {
-      Vector2 pos = Model.Disk.Head.Target.ToSystem();
-      pos = Model.Screen.ScreenToWorld(new Vector2D<float>(_ctx.Mice[0].Position.X, _ctx.Mice[0].Position.Y)).ToSystem();
-      Model.Disk.Head.Target = new(pos.X, pos.Y);
     }
     {
       float rotation = Model.Disk.Rotation;
