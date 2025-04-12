@@ -19,6 +19,7 @@ class Window
   public ImGuiController UIContext { get; private set; }
   public UI.For.App UI { get; private set; }
   public GL GL { get; set; }
+  public Simulation.For.App Simulation { get; private set; }
 
   #pragma warning disable CS8618
   public Window(App model)
@@ -30,6 +31,7 @@ class Window
       Renderer = new Renderer.For.App(Model!, RenderContext, RenderContext);
       UIContext = new(RenderContext.GL, _handle, _handle.CreateInput());
       UI = new(Model!, UIContext);
+      Simulation = new(Model!);
       OnFramebufferResize(_handle.Size);
     };
     Model = model;
@@ -42,6 +44,7 @@ class Window
     _handle.Update += (double deltaTime) => {
       UIContext!.Update((float)deltaTime);
       UI!.Apply();
+      Simulation!.Update((float)deltaTime);
     };
     _handle.FramebufferResize += OnFramebufferResize;
     

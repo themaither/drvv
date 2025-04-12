@@ -7,23 +7,24 @@ namespace Drvv.Renderer.For;
 
 class Disk : IRendererFor<Model.Disk>
 {
-  public Model.Disk Target { get; }
+  public Model.Disk Model { get; }
   public Selection Selection { get; set; }
-
-  public Model.Disk Model => throw new NotImplementedException();
 
   private readonly IVertexRendererContext _vertexCtx;
 
   public Disk(Model.Disk target, Selection selection, IVertexRendererContext context)
   {
-    Target = target;
+    Model = target;
     Selection = selection;
     _vertexCtx = context;
   }
 
   public void Render()
   {
-    var pri = Primitives.Disk<Vector2D<float>>.Generate(0.1f, 0.9f, 16, 64, 12f);
+    var pri = Primitives.Disk<Vector2D<float>>.Generate(
+      Model.InnerRadius, Model.OuterRadius, 
+      Model.Rows, Model.Columns, 12f
+    );
     var color = new Color3<float>(0f, 0f, 0f);
     var selectedColor = new Color3<float>(.2f, .3f, .4f);
     _vertexCtx.CommitTriangles(
@@ -46,6 +47,14 @@ class Disk : IRendererFor<Model.Disk>
         .SelectMany(a => a.Outline())
         .SelectMany(a => a.Dissolve())
         .Select(a => new Primitives.Vertex(a, new Color3<float>(1f, 1f, 1f)))
+    );
+
+    //Draw pointer
+    _vertexCtx.CommitLines(
+      new Primitives.Cross(Model.Pointer.Target)
+        .Lower()
+        .SelectMany(a => a.Dissolve())
+        .Select(a => new Vertex(a, new(1f, 0f, 0f)))
     );
   }
 }
