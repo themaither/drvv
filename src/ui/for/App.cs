@@ -18,11 +18,11 @@ class App
 
   public void Apply()
   {
-    {
-      Vector2 pos = Model.Disk.Head.Target.ToSystem();
-      pos = Model.Screen.ScreenToWorld(new Vector2D<float>(_ctx.Mice[0].Position.X, _ctx.Mice[0].Position.Y)).ToSystem();
-      Model.Pointer = new(pos.X, pos.Y);
-    }
+    // {
+    //   Vector2 pos = Model.Disk.Head.Target.ToSystem();
+    //   pos = Model.Screen.ScreenToWorld(new Vector2D<float>(_ctx.Mice[0].Position.X, _ctx.Mice[0].Position.Y)).ToSystem();
+    //   Model.Pointer = new(pos.X, pos.Y);
+    // }
     {
       int selection = Model.Selection.SelectedIndex;
       ImGui.InputInt("Selection", ref selection, 1, 5);
@@ -30,9 +30,13 @@ class App
     }
     {
       float rotation = Model.Disk.Rotation;
-      ImGui.DragFloat("Rotation", ref rotation, 0.1f);
+      ImGui.DragFloat("Rotation", ref rotation, 0.02f);
       Model.Disk.Rotation = rotation;
     }
-    
+    {
+      float rotation = Model.Disk.Head.Rotation;
+      ImGui.DragFloat("Head Rotation", ref rotation, 0.01f);
+      Model.Disk.Head.Rotation = rotation;
+    }
   }
 }

@@ -4,7 +4,7 @@ class Disk
 {
   public Disk()
   {
-    Head = new(this) {Target = new(0f, 0.5f)};
+    Head = new(this);
     InnerRadius = 0.1f;
     OuterRadius = 0.9f;
     Rows = 8;

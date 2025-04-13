@@ -18,7 +18,6 @@ class App
   public void Update(float deltaTime)
   {
     _disk.Update(deltaTime);
-    Model.Disk.Head.Target = Model.Pointer;
     Model.Selection.SelectedIndex = Model.Disk.Head.PointingIndex;
   }
 }
