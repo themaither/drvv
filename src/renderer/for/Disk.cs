@@ -11,12 +11,14 @@ class Disk : IRendererFor<Model.Disk>
   public Selection Selection { get; set; }
 
   private readonly IVertexRendererContext _vertexCtx;
+  private readonly Head _head;
 
   public Disk(Model.Disk target, Selection selection, IVertexRendererContext context)
   {
     Model = target;
     Selection = selection;
     _vertexCtx = context;
+    _head = new(Model.Head, _vertexCtx);
   }
 
   public void Render()
@@ -56,5 +58,7 @@ class Disk : IRendererFor<Model.Disk>
         .SelectMany(a => a.Dissolve())
         .Select(a => new Vertex(a, new(1f, 0f, 0f)))
     );
+
+    _head.Render();
   }
 }
