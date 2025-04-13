@@ -40,6 +40,7 @@ class Disk : IRendererFor<Model.Disk>
         .SelectMany(a => a.Lower())
         .SelectMany(a => a.Lower())
         .SelectMany(a => a.Dissolve())
+        .Select(a => new Vertex(a.Position + Model.Position, a.Color))
     );
 
     _vertexCtx.CommitLines(
@@ -49,14 +50,7 @@ class Disk : IRendererFor<Model.Disk>
         .SelectMany(a => a.Outline())
         .SelectMany(a => a.Dissolve())
         .Select(a => new Primitives.Vertex(a, new Color3<float>(1f, 1f, 1f)))
-    );
-
-    //Draw pointer
-    _vertexCtx.CommitLines(
-      new Primitives.Cross(Model.Head.Target)
-        .Lower()
-        .SelectMany(a => a.Dissolve())
-        .Select(a => new Vertex(a, new(1f, 0f, 0f)))
+        .Select(a => new Vertex(a.Position + Model.Position, a.Color))
     );
 
     _head.Render();

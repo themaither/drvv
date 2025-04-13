@@ -23,6 +23,7 @@ class Head : IRendererFor<Model.Head>
       )
       .Dissolve()
       .Select(a => new Primitives.Vertex(a, new(0f, 1f, 0f)))
+      .Select(a => new Primitives.Vertex(a.Position + Model.Owner.Position, a.Color))
     );
   }
 }

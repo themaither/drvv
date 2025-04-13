@@ -43,5 +43,10 @@ class App
       ImGui.DragFloat("Scale", ref scale, 0.01f);
       Model.Disk.Scale = scale;
     }
+    {
+      var position = Model.Disk.Position.ToSystem();
+      ImGui.DragFloat2("Position", ref position, 0.01f);
+      Model.Disk.Position = new(position.X, position.Y);
+    }
   }
 }

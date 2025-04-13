@@ -1,3 +1,5 @@
+using Silk.NET.Maths;
+
 namespace Drvv.Model;
 
 class Disk
@@ -23,4 +25,6 @@ class Disk
   public float Rotation { get; set; }
 
   public float Scale { get; set; }
+
+  public Vector2D<float> Position { get; set; }
 }
