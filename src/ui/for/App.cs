@@ -38,5 +38,10 @@ class App
       ImGui.DragFloat("Head Rotation", ref rotation, 0.01f);
       Model.Disk.Head.Rotation = rotation;
     }
+    {
+      float scale = Model.Disk.Scale;
+      ImGui.DragFloat("Scale", ref scale, 0.01f);
+      Model.Disk.Scale = scale;
+    }
   }
 }

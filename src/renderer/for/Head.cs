@@ -18,7 +18,9 @@ class Head : IRendererFor<Model.Head>
   public void Render()
   {
     _vertexCtx.CommitTriangles(
-      Primitives.Triangle<Vector2D<float>>.GenerateDirectional(new(-.25f, -1f), Model.Target, .2f)
+      Primitives.Triangle<Vector2D<float>>.GenerateDirectional(
+        new(-.25f * Model.Owner.Scale, -1f * Model.Owner.Scale), Model.Target, .2f * Model.Owner.Scale
+      )
       .Dissolve()
       .Select(a => new Primitives.Vertex(a, new(0f, 1f, 0f)))
     );

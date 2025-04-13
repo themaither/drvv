@@ -11,7 +11,7 @@ class Head
     Owner = owner;
   }
 
-  public Vector2D<float> Target => new(MathF.Sin(Rotation) - 0.25f, MathF.Cos(Rotation) - 1f);
+  public Vector2D<float> Target => new((MathF.Sin(Rotation) - 0.25f) * Owner.Scale, (MathF.Cos(Rotation) - 1f) * Owner.Scale);
 
   public int PointingIndex { get; set; }
 
