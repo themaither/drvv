@@ -7,7 +7,7 @@ class Disk
   public Disk()
   {
     Head = new(this);
-    Rows = 6;
+    Rows = 16;
     Columns = 48;
     Scale = 0.75f;
   }

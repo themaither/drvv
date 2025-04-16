@@ -44,5 +44,21 @@ class Head
     {
       Model.PointingIndex = -1;
     }
+
+    ApproachRow(Model.TargetRow, Model.Speed * deltaTime);
   }  
+
+  public void ApproachRow(int row, float step)
+  {
+    
+    float currentRowDistance = Vector2D.Distance(Model.Target, Model.Owner.Position);
+    float rowHeight = ((Model.Owner.OuterRadius - Model.Owner.InnerRadius) / Model.Owner.Rows);
+    float desiredRowDistance = Model.Owner.InnerRadius + rowHeight * (row + 0.5f);
+
+//    if (currentRowDistance == desiredRowDistance) return;
+    if (currentRowDistance > desiredRowDistance) 
+      Model.Rotation -=  Math.Abs(desiredRowDistance - currentRowDistance);
+    else 
+      Model.Rotation += Math.Abs(desiredRowDistance - currentRowDistance);
+  }
 }

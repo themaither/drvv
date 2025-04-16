@@ -29,6 +29,11 @@ class App
       Model.Selection.SelectedIndex = selection;
     }
     {
+      int selection = Model.Disk.Head.TargetRow;
+      ImGui.InputInt("Row", ref selection, 0, 12);
+      Model.Disk.Head.TargetRow = selection;
+    }
+    {
       float rotation = Model.Disk.Rotation;
       ImGui.DragFloat("Rotation", ref rotation, 0.02f);
       Model.Disk.Rotation = rotation;
