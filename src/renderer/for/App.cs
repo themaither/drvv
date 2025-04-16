@@ -14,7 +14,7 @@ class App : IRendererFor<Model.App>
   {
     Model = model;
     _vertexCtx = vertexCtx;
-    _diskRenderer = new(Model.Disk, Model.Selection, _vertexCtx);
+    _diskRenderer = new(Model.Disk, _vertexCtx);
   }
 
   public void Render()

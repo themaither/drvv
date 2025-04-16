@@ -15,5 +15,7 @@ class Head
 
   public int PointingIndex { get; set; }
 
+  public int PointingRow => PointingIndex % (int)Owner.Columns;
+
   public float Rotation { get; set; }
 }

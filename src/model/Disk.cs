@@ -9,7 +9,7 @@ class Disk
     Head = new(this);
     Rows = 6;
     Columns = 48;
-    Scale = 0.5f;
+    Scale = 0.75f;
   }
 
   public Head Head { get; }
@@ -27,4 +27,6 @@ class Disk
   public float Scale { get; set; }
 
   public Vector2D<float> Position { get; set; }
+  
+  public int TargetRow { get; set; }
 }

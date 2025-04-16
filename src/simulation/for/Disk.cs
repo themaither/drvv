@@ -23,5 +23,6 @@ class Disk
       Model.Rotation += MathF.PI * 2;
     if (Model.Rotation > MathF.PI * 2)
       Model.Rotation -= MathF.PI * 2;
-  }  
+    Model.Rotation += deltaTime * MathF.PI; 
+  }
 }

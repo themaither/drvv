@@ -8,15 +8,13 @@ namespace Drvv.Renderer.For;
 class Disk : IRendererFor<Model.Disk>
 {
   public Model.Disk Model { get; }
-  public Selection Selection { get; set; }
 
   private readonly IVertexRendererContext _vertexCtx;
   private readonly Head _head;
 
-  public Disk(Model.Disk target, Selection selection, IVertexRendererContext context)
+  public Disk(Model.Disk target, IVertexRendererContext context)
   {
     Model = target;
-    Selection = selection;
     _vertexCtx = context;
     _head = new(Model.Head, _vertexCtx);
   }
@@ -35,7 +33,7 @@ class Disk : IRendererFor<Model.Disk>
         .SelectMany(a => a.Lower())
         .Index()
         .Select(
-          a => a.Value.TransformType((b) => new Vertex(b, a.Index == Selection.SelectedIndex ? selectedColor : color))
+          a => a.Value.TransformType((b) => new Vertex(b, a.Index == Model.Head.PointingIndex ? selectedColor : color))
         )
         .SelectMany(a => a.Lower())
         .SelectMany(a => a.Lower())
