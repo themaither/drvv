@@ -10,9 +10,21 @@ class Disk
     Rows = 16;
     Columns = 48;
     Scale = 0.75f;
+    Data = new Data[Rows * Columns];
+
+    Data[4] = new Data(8);
+    Data[1] = new Data(3);
+    Data[2] = new Data(6);
+    Data[63] = new Data(20);
   }
 
   public Head Head { get; }
+  
+  public bool Running { get; set; }
+
+  public Data[] Data { get; set; }
+    
+  public float Speed { get; set; }
 
   public float InnerRadius => 0.3f * Scale;
 

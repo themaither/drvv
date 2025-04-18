@@ -50,12 +50,15 @@ class Head
 
   public void ApproachRow(int row, float step)
   {
-    
-    float currentRowDistance = Vector2D.Distance(Model.Target, Model.Owner.Position);
+    float currentRowDistance = Vector2D.Distance(Model.Target, /*Model.Owner.Position*/ new(0f, 0f)) / Model.Owner.Scale;
     float rowHeight = ((Model.Owner.OuterRadius - Model.Owner.InnerRadius) / Model.Owner.Rows);
-    float desiredRowDistance = Model.Owner.InnerRadius + rowHeight * (row + 0.5f);
+    float desiredRowDistance = (Model.Owner.InnerRadius + rowHeight * (row + 0.5f)) / Model.Owner.Scale;
 
-//    if (currentRowDistance == desiredRowDistance) return;
+    if (row == -1)
+    {
+      desiredRowDistance = (Model.Owner.OuterRadius - Model.Owner.InnerRadius + 0.6f * Model.Owner.Scale) / Model.Owner.Scale;
+    }
+
     if (currentRowDistance > desiredRowDistance) 
       Model.Rotation -=  Math.Abs(desiredRowDistance - currentRowDistance);
     else 

@@ -53,5 +53,10 @@ class App
       ImGui.DragFloat2("Position", ref position, 0.01f);
       Model.Disk.Position = new(position.X, position.Y);
     }
+    {
+      var position = Model.Disk.Running;
+      ImGui.Checkbox("Running", ref position);
+      Model.Disk.Running = position; 
+    }
   }
 }

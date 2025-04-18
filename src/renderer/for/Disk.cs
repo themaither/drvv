@@ -11,12 +11,14 @@ class Disk : IRendererFor<Model.Disk>
 
   private readonly IVertexRendererContext _vertexCtx;
   private readonly Head _head;
+  private readonly Data _data;
 
   public Disk(Model.Disk target, IVertexRendererContext context)
   {
     Model = target;
     _vertexCtx = context;
     _head = new(Model.Head, _vertexCtx);
+    _data = new(new Random());
   }
 
   public void Render()
@@ -33,7 +35,8 @@ class Disk : IRendererFor<Model.Disk>
         .SelectMany(a => a.Lower())
         .Index()
         .Select(
-          a => a.Value.TransformType((b) => new Vertex(b, a.Index == Model.Head.PointingIndex ? selectedColor : color))
+         // a => a.Value.TransformType((b) => new Vertex(b, a.Index == Model.Head.PointingIndex ? selectedColor : color))
+          a => a.Value.TransformType( (b) => new Vertex(b, _data.GetColorFor(Model.Data[a.Index])) )
         )
         .SelectMany(a => a.Lower())
         .SelectMany(a => a.Lower())
