@@ -1,8 +1,6 @@
-using System.Numerics;
-using ImGuiNET;
 using Silk.NET.Input;
-using Silk.NET.Maths;
-using Silk.NET.OpenGL.Extensions.ImGui;
+using ImGuiNET;
+using System.Numerics;
 
 namespace Drvv.UI.For;
 
@@ -10,53 +8,46 @@ class App
 {
   public Model.App Model { get; }
   private IInputContext _ctx;
+
+  private Tasks _tasks;
   public App(Model.App model, IInputContext context) 
   {
     Model = model;
     _ctx = context;
+    _tasks = new(Model.Tasks);
+  }
+
+  public void HugeStartButton()
+  {
+    if (Model.Disk.Running)
+    {
+      ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1f));
+      ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.5f, 0.2f, 0.2f, 1f));
+      ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.25f, 0f, 0f, 1f));
+      if(ImGui.Button("Abort", new(80, 40)))
+      {
+        Model.Disk.Running = false;
+      }
+      ImGui.PopStyleColor(3);
+      return;
+    }
+    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1f));
+    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.5f, 0.2f, 1f));
+    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0f, 0.25f, 0f, 1f));
+    if(ImGui.Button("Start", new(80, 40)))
+    {
+      Model.Disk.Running = true;
+    }
+    ImGui.PopStyleColor(3);
   }
 
   public void Apply()
   {
-    // {
-    //   Vector2 pos = Model.Disk.Head.Target.ToSystem();
-    //   pos = Model.Screen.ScreenToWorld(new Vector2D<float>(_ctx.Mice[0].Position.X, _ctx.Mice[0].Position.Y)).ToSystem();
-    //   Model.Pointer = new(pos.X, pos.Y);
-    // }
-    {
-      int selection = Model.Selection.SelectedIndex;
-      ImGui.InputInt("Selection", ref selection, 1, 5);
-      Model.Selection.SelectedIndex = selection;
-    }
-    {
-      int selection = Model.Disk.Head.TargetRow;
-      ImGui.InputInt("Row", ref selection, 0, 12);
-      Model.Disk.Head.TargetRow = selection;
-    }
-    {
-      float rotation = Model.Disk.Rotation;
-      ImGui.DragFloat("Rotation", ref rotation, 0.02f);
-      Model.Disk.Rotation = rotation;
-    }
-    {
-      float rotation = Model.Disk.Head.Rotation;
-      ImGui.DragFloat("Head Rotation", ref rotation, 0.01f);
-      Model.Disk.Head.Rotation = rotation;
-    }
-    {
-      float scale = Model.Disk.Scale;
-      ImGui.DragFloat("Scale", ref scale, 0.01f);
-      Model.Disk.Scale = scale;
-    }
-    {
-      var position = Model.Disk.Position.ToSystem();
-      ImGui.DragFloat2("Position", ref position, 0.01f);
-      Model.Disk.Position = new(position.X, position.Y);
-    }
-    {
-      var position = Model.Disk.Running;
-      ImGui.Checkbox("Running", ref position);
-      Model.Disk.Running = position; 
-    }
+    ImGui.Begin("Visualisation");
+    HugeStartButton();
+    _tasks.Apply();
+    ImGui.End();
+
+    ImGui.ShowDemoWindow();
   }
 }

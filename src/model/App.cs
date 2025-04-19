@@ -9,6 +9,7 @@ class App
     Disk = new();
     Selection = new() {SelectedIndex = -1};
     Screen = new() { AspectRatio = .5f };
+    Tasks = [];
   }
 
   public Disk Disk { get; set; }
@@ -18,4 +19,6 @@ class App
   public Screen Screen { get; set; }
 
   public Vector2D<float> Pointer { get; set; }
+
+  public List<Model.Task> Tasks { get; set; }
 }
