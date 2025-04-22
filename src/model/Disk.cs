@@ -39,6 +39,4 @@ class Disk
   public float Scale { get; set; }
 
   public Vector2D<float> Position { get; set; }
-  
-  public int TargetRow { get; set; }
 }
