@@ -19,6 +19,6 @@ class App
   {
     _disk.Update(deltaTime);
     Model.Selection.SelectedIndex = Model.Disk.Head.TargetSector;
-    Model.Strategy.Update(deltaTime);
+    Model.Algorithm.Update(deltaTime);
   }
 }

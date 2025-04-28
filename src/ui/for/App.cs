@@ -20,14 +20,14 @@ class App
 
   public void HugeStartButton()
   {
-    if (Model.Strategy.Running)
+    if (Model.Algorithm.Running)
     {
       ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1f));
       ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.5f, 0.2f, 0.2f, 1f));
       ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.25f, 0f, 0f, 1f));
       if(ImGui.Button("Abort", new(80, 40)))
       {
-        Model.Strategy.Running = false;
+        Model.Algorithm.Running = false;
         Model.Disk.Running = false;
       }
       ImGui.PopStyleColor(3);
@@ -38,7 +38,7 @@ class App
     ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0f, 0.25f, 0f, 1f));
     if(ImGui.Button("Start", new(80, 40)))
     {
-      Model.Strategy.Running = true;
+      Model.Algorithm.Running = true;
     }
     ImGui.PopStyleColor(3);
   }

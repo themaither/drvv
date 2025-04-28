@@ -3,15 +3,15 @@ using Drvv.Model;
 using Drvv.UI.For;
 using Silk.NET.OpenGL;
 
-namespace Drvv.Simulation.Strategy;
+namespace Drvv.Simulation.Algorithms;
 
-class FIFOStrategy : Strategy
+class FCFS : Algorithm
 {
   private List<Model.Task> _tasks;
 
   private Disk _disk;
 
-  public FIFOStrategy(List<Model.Task> tasks, Disk disk)
+  public FCFS(List<Model.Task> tasks, Disk disk)
   {
     _tasks = tasks;
     _disk = disk;

@@ -1,6 +1,6 @@
-namespace Drvv.Simulation.Strategy;
+namespace Drvv.Simulation.Algorithms;
 
-abstract class Strategy
+abstract class Algorithm
 {
   public bool Running { get; set; }
   public void Update(float deltaTime)
