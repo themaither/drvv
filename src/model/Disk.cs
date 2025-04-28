@@ -11,11 +11,6 @@ class Disk
     Columns = 48;
     Scale = 0.75f;
     Data = new Data[Rows * Columns];
-
-    Data[4] = new Data(8);
-    Data[1] = new Data(3);
-    Data[2] = new Data(6);
-    Data[63] = new Data(20);
   }
 
   public Head Head { get; }

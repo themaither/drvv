@@ -1,3 +1,4 @@
+using Drvv.Simulation.Strategy;
 using Silk.NET.Maths;
 
 namespace Drvv.Model;
@@ -10,6 +11,7 @@ class App
     Selection = new() {SelectedIndex = -1};
     Screen = new() { AspectRatio = .5f };
     Tasks = [];
+    Strategy = new FIFOStrategy(Tasks, Disk);
   }
 
   public Disk Disk { get; set; }
@@ -21,4 +23,6 @@ class App
   public Vector2D<float> Pointer { get; set; }
 
   public List<Model.Task> Tasks { get; set; }
+
+  public Strategy Strategy { get; set; }
 }

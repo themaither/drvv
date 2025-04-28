@@ -37,20 +37,20 @@ class Head
       / (Model.Owner.OuterRadius - Model.Owner.InnerRadius) * Model.Owner.Rows;
     float markedColumn = (angle / MathF.PI) * Model.Owner.Columns / 2;
 
-    Model.PointingIndex 
+    Model.TargetSector 
       = (int)markedColumn + (int)markedRow * (int)Model.Owner.Columns;
 
     if (distance < Model.Owner.InnerRadius)
     {
-      Model.PointingIndex = -1;
+      Model.TargetSector = -1;
     }
 
-    ApproachRow(Model.TargetRow, Model.Speed * deltaTime);
+    ApproachRow(Model.TargetRow);
   }  
 
-  public void ApproachRow(int row, float step)
+  public void ApproachRow(int row)
   {
-    float currentRowDistance = Vector2D.Distance(Model.Target, /*Model.Owner.Position*/ new(0f, 0f)) / Model.Owner.Scale;
+    float currentRowDistance = Vector2D.Distance(Model.Target, new(0f, 0f)) / Model.Owner.Scale;
     float rowHeight = ((Model.Owner.OuterRadius - Model.Owner.InnerRadius) / Model.Owner.Rows);
     float desiredRowDistance = (Model.Owner.InnerRadius + rowHeight * (row + 0.5f)) / Model.Owner.Scale;
 

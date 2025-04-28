@@ -15,6 +15,10 @@ class Tasks
     ImGui.AlignTextToFramePadding();
     ImGui.Text("Tasks");
     ImGui.SameLine();
+    if (ImGui.Button("Clear"))
+    {
+      Model.Clear();
+    }
     if (ImGui.Button("Add READ"))
     {
       Model.Add(new Model.ReadTask());
