@@ -18,7 +18,7 @@ class Disk
     Model = target;
     _vertexCtx = context;
     _head = new(Model.Head, _vertexCtx);
-    _data = new(new Random());
+    _data = new();
   }
 
   public void Render()

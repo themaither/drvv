@@ -5,7 +5,7 @@ using Silk.NET.OpenGL;
 
 namespace Drvv.Renderer.For;
 
-class App : IRendererFor<Model.App>
+class App
 {
   private readonly IVertexRendererContext _vertexCtx;
   private readonly Renderer.For.Disk _diskRenderer;

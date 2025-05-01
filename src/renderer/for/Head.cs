@@ -1,4 +1,3 @@
-
 using Silk.NET.Maths;
 
 namespace Drvv.Renderer.For;
