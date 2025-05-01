@@ -3,7 +3,7 @@ using Silk.NET.Maths;
 
 namespace Drvv.Renderer.For;
 
-class Head : IRendererFor<Model.Head>
+class Head
 {
   public Model.Head Model { get; }
 

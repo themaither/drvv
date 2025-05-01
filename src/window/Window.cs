@@ -1,6 +1,3 @@
-namespace Drvv.Window;
-
-using System.Numerics;
 using Drvv.Model;
 using Drvv.Renderer;
 using Silk.NET.Input;
@@ -8,6 +5,8 @@ using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.OpenGL.Extensions.ImGui;
 using Silk.NET.Windowing;
+
+namespace Drvv.Window;
 
 class Window
 {

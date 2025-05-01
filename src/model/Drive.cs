@@ -9,6 +9,7 @@ class Drive
     {
       Disks[i] = new Disk(rows, columns);
     }
+    Cylinders = rows * columns;
   }
 
   public Disk[] Disks { get; }

@@ -3,12 +3,9 @@ namespace Drvv.Model;
 abstract class Task
 {
   public int Sector { get; set; }
-  
 }
 
-class ReadTask : Task
-{
-}
+class ReadTask : Task {}
 
 class WriteTask : Task
 {

@@ -1,5 +1,6 @@
-namespace Drvv.Primitives;
 using Silk.NET.Maths;
+
+namespace Drvv.Primitives;
 
 struct Vertex(Vector2D<float> position, Color3<float> color)
 {

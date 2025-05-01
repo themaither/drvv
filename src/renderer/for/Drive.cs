@@ -1,6 +1,6 @@
 namespace Drvv.Renderer.For;
 
-class Drive : IRendererFor<Model.Drive>
+class Drive
 {
   public Model.Drive Model => throw new NotImplementedException();
 

@@ -1,6 +1,3 @@
-
-using Silk.NET.Maths;
-
 namespace Drvv.Simulation.For;
 
 class App

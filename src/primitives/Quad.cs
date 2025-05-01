@@ -1,4 +1,3 @@
-
 namespace Drvv.Primitives;
 
 record Quad<T>(T P1, T P2, T P3, T P4) : IHighOrderPrimitive<Triangle<T>>

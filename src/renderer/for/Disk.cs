@@ -5,7 +5,7 @@ using Silk.NET.Maths;
 
 namespace Drvv.Renderer.For;
 
-class Disk : IRendererFor<Model.Disk>
+class Disk
 {
   public Model.Disk Model { get; }
 

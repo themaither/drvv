@@ -1,3 +1,5 @@
+namespace Drvv.Primitives;
+
 struct Color3<T>(T red, T green, T blue)
 {
   public T Red { get; set; } = red;
