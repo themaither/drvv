@@ -10,15 +10,15 @@ class Disk
   public Model.Disk Model { get; }
 
   private readonly IVertexRendererContext _vertexCtx;
-  private readonly Head _head;
-  private readonly Data _data;
+  private readonly Head _headRenderer;
+  private readonly Data _dataRenderer;
 
   public Disk(Model.Disk target, IVertexRendererContext context)
   {
     Model = target;
     _vertexCtx = context;
-    _head = new(Model.Head, _vertexCtx);
-    _data = new();
+    _headRenderer = new(Model.Head, _vertexCtx);
+    _dataRenderer = new();
   }
 
   public void Render()
@@ -36,7 +36,7 @@ class Disk
         .Index()
         .Select(
          // a => a.Value.TransformType((b) => new Vertex(b, a.Index == Model.Head.PointingIndex ? selectedColor : color))
-          a => a.Value.TransformType( (b) => new Vertex(b, _data.GetColorFor(Model.Data[a.Index])) )
+          a => a.Value.TransformType( (b) => new Vertex(b, _dataRenderer.GetColorFor(Model.Data[a.Index])) )
         )
         .SelectMany(a => a.Lower())
         .SelectMany(a => a.Lower())
@@ -54,6 +54,6 @@ class Disk
         .Select(a => new Vertex(a.Position + Model.Position, a.Color))
     );
 
-    _head.Render();
+    _headRenderer.Render();
   }
 }
