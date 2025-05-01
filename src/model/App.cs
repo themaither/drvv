@@ -7,12 +7,12 @@ class App
 {
   public App()
   {
-    Drive = new(2, 16, 32);
+    Drive = new(2, 3, 64);
     Drive.Disks[1].Position = new(2, 0);
     Selection = new() {SelectedIndex = -1};
     Screen = new() { AspectRatio = .5f };
     Tasks = [];
-    Algorithm = new FCFS(Tasks, Disk);
+    Algorithm = new FCFS(Tasks, Drive);
   }
 
   public Drive Drive { get; set; }

@@ -53,11 +53,6 @@ class Tasks
         read.Sector = sector;
         
         ImGui.SameLine();
-        if (ImGui.Button("X"))
-        {
-          Model.RemoveAt(i);
-          break;
-        }
       }
       if (Model[i] is Model.WriteTask write)
       {

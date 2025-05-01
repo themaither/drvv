@@ -28,7 +28,10 @@ class App
       if(ImGui.Button("Abort", new(80, 40)))
       {
         Model.Algorithm.Running = false;
-        Model.Disk.Running = false;
+        foreach (var item in Model.Drive.Disks)
+        {
+          item.Running = false;
+        }
       }
       ImGui.PopStyleColor(3);
       return;
@@ -54,7 +57,7 @@ class App
 
     if (ImGui.Button("Deep format"))
     {
-      for (int i = 0; i < Model.Disk.Rows * Model.Disk.Columns; i++)
+      for (int i = 0; i < Model.Drive.Cylinders * Model.Drive.Disks.Length; i++)
       {
         Model.Tasks.Add(new WriteTask() { Sector = i, Value = new Data(0) });
       }
@@ -62,7 +65,7 @@ class App
     if (ImGui.Button("Write gibberish"))
     {
       Random rng = new();
-      for (int i = 0; i < Model.Disk.Rows * Model.Disk.Columns; i++)
+      for (int i = 0; i < Model.Drive.Cylinders * Model.Drive.Disks.Length; i++)
       {
         Model.Tasks.Add(new WriteTask() { Sector = i, Value = new Data(rng.Next(8)) });
       }
