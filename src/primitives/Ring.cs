@@ -7,7 +7,7 @@ record Ring<T>(List<QuadStrip<T>> Strips) : IHighOrderPrimitive<QuadStrip<T>>
 {
   public IEnumerable<QuadStrip<T>> Lower() => Strips;
 
-  public static Ring<Vector2D<float>> Generate(float inner_radius, float outer_radius, float rotation, uint count, float resolution)
+  public static Ring<Vector2D<float>> Generate(float inner_radius, float outer_radius, float rotation, int count, float resolution)
   {
     return new Ring<Vector2D<float>>(
       new List<QuadStrip<Vector2D<float>>>(
@@ -16,7 +16,7 @@ record Ring<T>(List<QuadStrip<T>> Strips) : IHighOrderPrimitive<QuadStrip<T>>
     );
   }
 
-  private static IEnumerable<QuadStrip<Vector2D<float>>> GenerateQuadStrips(float inner_radius, float outer_radius, float rotation, uint count, float resolution)
+  private static IEnumerable<QuadStrip<Vector2D<float>>> GenerateQuadStrips(float inner_radius, float outer_radius, float rotation, int count, float resolution)
   {
     float increment = MathF.PI * 2 / count; 
 

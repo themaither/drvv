@@ -67,6 +67,15 @@ class App
         Model.Tasks.Add(new WriteTask() { Sector = i, Value = new Data(rng.Next(8)) });
       }
     }
+    if (!Model.Algorithm.Running && ImGui.Button("Shuffle"))
+    {
+      Random rng = new();
+      for (int i = 0; i < Model.Tasks.Count; i++)
+      {
+        int pickedIndex = rng.Next(0, (int)Model.Disk.Rows * (int)Model.Disk.Columns);
+        (Model.Tasks[i], Model.Tasks[pickedIndex]) = (Model.Tasks[pickedIndex], Model.Tasks[i]);
+      }
+    }
 
     ImGui.End();
   }

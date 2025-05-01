@@ -7,7 +7,7 @@ class App
 {
   public App()
   {
-    Disk = new();
+    Disk = new(16, 32);
     Selection = new() {SelectedIndex = -1};
     Screen = new() { AspectRatio = .5f };
     Tasks = [];

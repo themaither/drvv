@@ -6,7 +6,7 @@ record Disk<T>(List<Ring<T>> Rings) : IHighOrderPrimitive<Ring<T>>
 {
   public IEnumerable<Ring<T>> Lower() => Rings;
 
-  public static Disk<Vector2D<float>> Generate(float inner_radius, float outer_radius, float rotation, uint rows, uint columns, float resolution)
+  public static Disk<Vector2D<float>> Generate(float inner_radius, float outer_radius, float rotation, int rows, int columns, float resolution)
   {
     return new(
       new List<Ring<Vector2D<float>>>(
@@ -15,7 +15,7 @@ record Disk<T>(List<Ring<T>> Rings) : IHighOrderPrimitive<Ring<T>>
     );
   }
 
-  private static IEnumerable<Ring<Vector2D<float>>> GenerateRings(float inner_radius, float outer_radius, float rotation, uint rows, uint columns, float resolution)
+  private static IEnumerable<Ring<Vector2D<float>>> GenerateRings(float inner_radius, float outer_radius, float rotation, int rows, int columns, float resolution)
   {
     float increment = (outer_radius - inner_radius) / rows; 
 

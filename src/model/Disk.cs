@@ -4,11 +4,11 @@ namespace Drvv.Model;
 
 class Disk
 {
-  public Disk()
+  public Disk(int rows, int columns)
   {
     Head = new(this);
-    Rows = 16;
-    Columns = 48;
+    Rows = rows;
+    Columns = columns;
     Scale = 0.75f;
     Data = new Data[Rows * Columns];
   }
@@ -25,9 +25,9 @@ class Disk
 
   public float OuterRadius => 0.9f * Scale;
 
-  public uint Rows { get; set; }
+  public int Rows { get; set; }
 
-  public uint Columns { get; set; }
+  public int Columns { get; set; }
 
   public float Rotation { get; set; }
 
