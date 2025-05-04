@@ -5,20 +5,20 @@ using Drvv.UI.For;
 
 namespace Drvv.Simulation.Algorithms;
 
-class SSTF : Algorithm
+class SSTFOnDisk : Algorithm
 {
   private List<Model.Task> _tasks;
 
-  private Drive _drive;
+  private Disk _disk;
 
   public float RowBias { get; set; } = 1;
 
   public float ColumnBias { get; set; } = 1;
 
-  public SSTF(List<Model.Task> tasks, Drive drive)
+  public SSTFOnDisk(List<Model.Task> tasks, Disk disk)
   {
     _tasks = tasks;
-    _drive = drive;
+    _disk = disk;
   }
 
   private static int Wrap(int x, int max)
@@ -46,38 +46,34 @@ class SSTF : Algorithm
 
   protected override void OnUpdate(float deltaTime)
   {
-    foreach (var disk in _drive.Disks)
-    {
-      disk.Running = true;
-    }
+
+    _disk.Running = true;
     
-    if (_drive.Disks.Any(p => p.Speed <= 0.9))
+    
+    if (_disk.Speed <= 0.9)
       return;
 
     if (_tasks.Count == 0)
     {
-      foreach (var disk in _drive.Disks)
-      {
-        disk.Running = false;
-      }
+      _disk.Running = false;
       Running = false;
       return;
     }
 
-    var targetTask = PickClosestForDisk(_drive.Disks[0]);
+    var targetTask = PickClosestForDisk(_disk);
 
-    _drive.Disks[0].Head.TargetRow = 
-      ((targetTask.Sector) % (_drive.Disks[0].Rows * _drive.Disks[0].Columns)) / (int)_drive.Disks[0].Columns;
+    _disk.Head.TargetRow = 
+      ((targetTask.Sector) % (_disk.Rows * _disk.Columns)) / (int)_disk.Columns;
 
-    if (_drive.Disks[0].Head.TargetSector == targetTask.Sector)
+    if (_disk.Head.TargetSector == targetTask.Sector)
     {
       if (targetTask is ReadTask read)
       {
-        Console.WriteLine($"Read {_drive.Disks[0].Data[_drive.Disks[0].Head.TargetSector].Value}");
+        Console.WriteLine($"Read {_disk.Data[_disk.Head.TargetSector].Value}");
       } 
       else if (targetTask is WriteTask write)
       {
-        _drive.Disks[0].Data[_drive.Disks[0].Head.TargetSector] = write.Value;
+        _disk.Data[_disk.Head.TargetSector] = write.Value;
       }
       _tasks.Remove(targetTask);
     }

@@ -1,6 +1,6 @@
 # Todo
 - [x] Drive
-- [ ] FCFS --- What? It just broke for some reason
-- [x] SSTF
+- [x] FCFS --- Oh well, somebody just deleted it
+- [ ] SSTF --- Needs drive implementation
 - [ ] SCAN
 - [ ] Fix bug with slow movement after work

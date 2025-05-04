@@ -11,7 +11,7 @@ class App
     Selection = new() {SelectedIndex = -1};
     Screen = new() { AspectRatio = .5f };
     Tasks = [];
-    Algorithm = new FCFS(Tasks, Drive);
+    Algorithm = new SSTFOnDisk(Tasks, Drive.Disks[0]) { ColumnBias = 6, RowBias = 1 };
   }
 
   public Drive Drive { get; set; }

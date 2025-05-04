@@ -31,5 +31,19 @@ class FCFSOnDisk : Algorithm
     if (_disk.Speed <= 0.9f)
       return;
 
+    _disk.Head.TargetRow = ((_tasks.First().Sector) % (_disk.Rows * _disk.Columns)) / (int)_disk.Columns;
+    if (_disk.Head.TargetSector == _tasks.First().Sector - _offset)
+    {
+      if (_tasks.First() is ReadTask read)
+      {
+        Console.WriteLine($"Read {_disk.Data[_disk.Head.TargetSector].Value}");
+      } 
+      else if (_tasks.First() is WriteTask write)
+      {
+        _disk.Data[_disk.Head.TargetSector] = write.Value;
+      }
+      _tasks.Remove(_tasks.First());
+    }
+
   }
 }
