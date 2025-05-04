@@ -7,8 +7,7 @@ class App
 {
   public App()
   {
-    Drive = new(2, 3, 64);
-    Drive.Disks[1].Position = new(2, 0);
+    Drive = new(1, 8, 64);
     Selection = new() {SelectedIndex = -1};
     Screen = new() { AspectRatio = .5f };
     Tasks = [];

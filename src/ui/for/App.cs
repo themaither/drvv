@@ -70,6 +70,15 @@ class App
         Model.Tasks.Add(new WriteTask() { Sector = i, Value = new Data(rng.Next(8)) });
       }
     }
+    if (ImGui.Button("FCFS Test case"))
+    {
+      for (int i = 0; i < Model.Drive.Disks.First().Columns; i++)
+      {
+        Model.Tasks.Add(new WriteTask() { Sector = i, Value = new Data(2) });
+        Model.Tasks.Add(new WriteTask() { Sector = i + Model.Drive.Disks.First().Columns * 4, Value = new Data(3) });
+      }
+      
+    }
     if (!Model.Algorithm.Running && ImGui.Button("Shuffle"))
     {
       Random rng = new();
@@ -78,6 +87,10 @@ class App
         int pickedIndex = rng.Next(0, (int)Model.Disk.Rows * (int)Model.Disk.Columns);
         (Model.Tasks[i], Model.Tasks[pickedIndex]) = (Model.Tasks[pickedIndex], Model.Tasks[i]);
       }
+    }
+    if (!Model.Algorithm.Running && ImGui.Button("Stable shuffle"))
+    {
+      //TODO:
     }
 
     ImGui.End();
