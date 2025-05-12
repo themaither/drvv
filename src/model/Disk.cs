@@ -1,3 +1,4 @@
+using System.Reflection;
 using Silk.NET.Maths;
 
 namespace Drvv.Model;
@@ -34,4 +35,14 @@ class Disk
   public float Scale { get; set; }
 
   public Vector2D<float> Position { get; set; }
+
+  public void Start()
+  {
+    Running = true;
+  }
+
+  public void Stop()
+  {
+    Running = false;
+  }
 }

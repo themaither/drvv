@@ -8,10 +8,12 @@ class App
   public App()
   {
     Drive = new(1, 8, 64);
+    // Drive.Disks[1].Position = new(1.5f, 0);
     Selection = new() {SelectedIndex = -1};
     Screen = new() { AspectRatio = .5f };
     Tasks = [];
-    Algorithm = new SSTFOnDisk(Tasks, Drive.Disks[0]) { ColumnBias = 6, RowBias = 1 };
+    // Algorithm = new SSTF(Tasks, Drive) { ColumnBias = 1, RowBias = 40 };
+    Algorithm = new SSTFOnDisk(Tasks, Drive.Disks[0]) { ColumnBias = 1, RowBias = 40 };
   }
 
   public Drive Drive { get; set; }

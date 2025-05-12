@@ -46,7 +46,6 @@ class SSTFOnDisk : Algorithm
 
   protected override void OnUpdate(float deltaTime)
   {
-
     _disk.Running = true;
     
     
