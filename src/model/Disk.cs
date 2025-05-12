@@ -30,6 +30,8 @@ class Disk
 
   public int Columns { get; set; }
 
+  public int Sectors => Rows * Columns;
+
   public float Rotation { get; set; }
 
   public float Scale { get; set; }

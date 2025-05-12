@@ -16,11 +16,11 @@ class Drive
 
   public int Cylinders { get; }
 
-  public int Rows { get; }
+  public int Rows => Disks.First().Rows;
 
-  public int Columns { get; }
+  public int Columns => Disks.First().Columns;
 
-  public int Sectors { get; }
+  public int Sectors => Disks.First().Sectors;
 
   public bool Running => Disks.First().Running;
 
