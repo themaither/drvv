@@ -2,6 +2,7 @@ using Silk.NET.Input;
 using ImGuiNET;
 using System.Numerics;
 using Drvv.Model;
+using Silk.NET.OpenGL.Extensions.ImGui;
 
 namespace Drvv.UI.For;
 
@@ -46,8 +47,31 @@ class App
     ImGui.PopStyleColor(3);
   }
 
+  float _mouseX, _mouseY;
+
+  public void ApplyCamera() {
+    float currentMouseX = _ctx.Mice[0].Position.X;
+    float currentMouseY = _ctx.Mice[0].Position.Y;
+
+    if (_ctx.Mice[0].IsButtonPressed(MouseButton.Left))
+    {
+      Model.Screen.CameraPosition += new Silk.NET.Maths.Vector2D<float>(
+        (currentMouseX - _mouseX) / Model.Screen.Resolution.X * 2,
+        (_mouseY - currentMouseY) / Model.Screen.Resolution.Y * 2
+      );
+    }
+
+
+    _mouseX = currentMouseX;
+    _mouseY = currentMouseY;
+  }
+
   public void Apply()
   {
+    if (!ImGui.GetIO().WantCaptureMouse)
+    {
+      ApplyCamera();
+    }
     ImGui.Begin("Visualisation");
     HugeStartButton();
     _tasks.Apply();
