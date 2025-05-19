@@ -54,7 +54,6 @@ class SSTFOnDisk : Algorithm
 
     if (_tasks.Count == 0)
     {
-      _disk.Running = false;
       Running = false;
       return;
     }

@@ -20,20 +20,16 @@ class App
     _tasks = new(Model.Tasks);
   }
 
-  public void HugeStartButton()
+  public static void HugeButton(ref bool state, string textOn, string textOff) 
   {
-    if (Model.Algorithm.Running)
+    if (state)
     {
       ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1f));
       ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.5f, 0.2f, 0.2f, 1f));
       ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.25f, 0f, 0f, 1f));
-      if(ImGui.Button("Abort", new(80, 40)))
+      if(ImGui.Button(textOff, new(80, 40)))
       {
-        Model.Algorithm.Running = false;
-        foreach (var item in Model.Drive.Disks)
-        {
-          item.Running = false;
-        }
+        state = false;
       }
       ImGui.PopStyleColor(3);
       return;
@@ -41,9 +37,9 @@ class App
     ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1f));
     ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.5f, 0.2f, 1f));
     ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0f, 0.25f, 0f, 1f));
-    if(ImGui.Button("Start", new(80, 40)))
+    if(ImGui.Button(textOn, new(80, 40)))
     {
-      Model.Algorithm.Running = true;
+      state = true;
     }
     ImGui.PopStyleColor(3);
   }
@@ -76,7 +72,24 @@ class App
       ApplyCamera();
     }
     ImGui.Begin("Visualisation");
-    HugeStartButton();
+
+    {
+      bool running = Model.Drive.Running;
+      HugeButton(ref running, "Power on", "Power off");
+      if (running)
+      {
+        Model.Drive.Start(); 
+      } else {
+        Model.Drive.Stop();
+      }
+    }
+    ImGui.SameLine();
+    {
+      bool running = Model.Algorithm.Running;
+      HugeButton(ref running, "Start", "Abort");
+      Model.Algorithm.Running = running;
+    }
+
     _tasks.Apply();
     ImGui.End();
 

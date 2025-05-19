@@ -54,7 +54,6 @@ class SSTF : Algorithm
 
     if (_tasks.Count == 0)
     {
-      _drive.Stop();
       Running = false;
       return;
     }

@@ -22,8 +22,7 @@ class FCFSOnDisk : Algorithm
     _disk.Running = true;
     if (_tasks.Count == 0) 
     {
-      _disk.Head.TargetRow = -1;
-      _disk.Running = false;
+      // _disk.Head.TargetRow = -1;
       Running = false;
       return;
     }
