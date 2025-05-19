@@ -10,6 +10,8 @@ class Screen
 
   public Vector2D<float> CameraPosition { get; set; } = new(0, 0);
 
+  public float Scale { get; set; } = 1.0f;
+
   public Vector2D<float> ScreenToWorld(Vector2D<float> input)
   {
     var distorted = input; //with{X = input.X / AspectRatio };
@@ -31,8 +33,8 @@ class Screen
   public float[] ToMatrixArray()
   {
     return [
-      0.5f / AspectRatio, 0f, 0f, 0f,
-      0f,               0.5f, 0f, 0f,
+      Scale / AspectRatio, 0f, 0f, 0f,
+      0f,               Scale, 0f, 0f,
       0f,               0f, 1f, 0f,
       CameraPosition.X, CameraPosition.Y, 0f, 1f
     ];

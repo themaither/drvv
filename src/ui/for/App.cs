@@ -3,6 +3,7 @@ using ImGuiNET;
 using System.Numerics;
 using Drvv.Model;
 using Silk.NET.OpenGL.Extensions.ImGui;
+using System.Runtime.InteropServices;
 
 namespace Drvv.UI.For;
 
@@ -50,6 +51,7 @@ class App
   float _mouseX, _mouseY;
 
   public void ApplyCamera() {
+    Console.WriteLine(_ctx.Mice[0].ScrollWheels[0].Y);
     float currentMouseX = _ctx.Mice[0].Position.X;
     float currentMouseY = _ctx.Mice[0].Position.Y;
 
@@ -61,6 +63,7 @@ class App
       );
     }
 
+    Model.Screen.Scale += _ctx.Mice[0].ScrollWheels[0].Y / 20;
 
     _mouseX = currentMouseX;
     _mouseY = currentMouseY;
