@@ -33,7 +33,6 @@ class Tasks
     for (int i = 0; i < Model.Count; i++)
     {
       ImGui.PushID(i);
-      ImGui.BeginChild("", new(0, 70), ImGuiChildFlags.Border);
       //TODO: put this somewhere else
       if (ImGui.Button("X"))
       {
@@ -43,6 +42,7 @@ class Tasks
       ImGui.SameLine();
       if (Model[i] is Model.ReadTask read)
       {
+        ImGui.BeginChild("", new(0, 60), ImGuiChildFlags.Border);
         ImGui.AlignTextToFramePadding();
         ImGui.Text("READ");
 
@@ -58,6 +58,7 @@ class Tasks
       }
       if (Model[i] is Model.WriteTask write)
       {
+        ImGui.BeginChild("", new(0, 85), ImGuiChildFlags.Border);
         ImGui.AlignTextToFramePadding();
         ImGui.Text("WRITE");
 
@@ -69,6 +70,7 @@ class Tasks
         if (sector < 0) sector = 0;
         write.Sector = sector;
 
+        ImGui.PushID("1");
         int value = write.Value.Value;
         ImGui.Text("Value:");
         ImGui.SameLine();
@@ -76,7 +78,7 @@ class Tasks
         ImGui.InputInt("", ref value);
         if (value < 0) value = 0;
         write.Value = new(value);
-
+        ImGui.PopID();
       }
       ImGui.EndChild();
       ImGui.PopID();

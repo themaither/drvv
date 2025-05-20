@@ -29,6 +29,10 @@ class FCFS : Algorithm
     {
       diskAlgorithm.Running = true;
       diskAlgorithm.Update(deltaTime);
+      if (_tasks.Count == 0)
+      {
+        Running = false; 
+      }
     }
   }
 }
