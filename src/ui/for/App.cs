@@ -66,14 +66,6 @@ class App
     _mouseY = currentMouseY;
   }
 
-  bool _settingsShown = false;
-
-  public void Settings() {
-    ImGui.Begin("Settings", ref _settingsShown);
-
-    ImGui.End();
-  }
-
   public void Apply()
   {
     if (!ImGui.GetIO().WantCaptureMouse)
