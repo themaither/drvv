@@ -6,6 +6,7 @@ using Drvv.UI.For;
 
 namespace Drvv.Simulation.Algorithms;
 
+[Name("SSTF")]
 class SSTF : Algorithm
 {
   private List<Model.Task> _tasks;

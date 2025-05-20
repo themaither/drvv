@@ -33,7 +33,7 @@ class Tasks
     for (int i = 0; i < Model.Count; i++)
     {
       ImGui.PushID(i);
-      ImGui.BeginChild("", new(0, 35), ImGuiChildFlags.Border);
+      ImGui.BeginChild("", new(0, 70), ImGuiChildFlags.Border);
       //TODO: put this somewhere else
       if (ImGui.Button("X"))
       {
@@ -47,9 +47,11 @@ class Tasks
         ImGui.Text("READ");
 
         int sector = read.Sector;
+        ImGui.Text("Sector:");
         ImGui.SameLine();
         ImGui.SetNextItemWidth(100);
-        ImGui.InputInt("Sector", ref sector);
+        ImGui.InputInt("", ref sector);
+        if (sector < 0) sector = 0;
         read.Sector = sector;
         
         ImGui.SameLine();
@@ -60,15 +62,19 @@ class Tasks
         ImGui.Text("WRITE");
 
         int sector = write.Sector;
+        ImGui.Text("Sector:");
         ImGui.SameLine();
         ImGui.SetNextItemWidth(100);
-        ImGui.InputInt("Sector", ref sector);
+        ImGui.InputInt("", ref sector);
+        if (sector < 0) sector = 0;
         write.Sector = sector;
 
         int value = write.Value.Value;
+        ImGui.Text("Value:");
         ImGui.SameLine();
         ImGui.SetNextItemWidth(100);
-        ImGui.InputInt("Value", ref value);
+        ImGui.InputInt("", ref value);
+        if (value < 0) value = 0;
         write.Value = new(value);
 
       }

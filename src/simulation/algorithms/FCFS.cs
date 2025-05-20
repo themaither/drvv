@@ -2,6 +2,7 @@ using Drvv.Model;
 
 namespace Drvv.Simulation.Algorithms;
 
+[Name("FCFS")]
 class FCFS : Algorithm
 {
   private List<Model.Task> _tasks;

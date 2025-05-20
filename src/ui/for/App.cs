@@ -4,6 +4,7 @@ using System.Numerics;
 using Drvv.Model;
 using Silk.NET.OpenGL.Extensions.ImGui;
 using System.Runtime.InteropServices;
+using System.Reflection;
 
 namespace Drvv.UI.For;
 
@@ -11,7 +12,6 @@ class App
 {
   public Model.App Model { get; }
   private IInputContext _ctx;
-
   private Tasks _tasks;
   public App(Model.App model, IInputContext context) 
   {
@@ -27,7 +27,7 @@ class App
       ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1f));
       ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.5f, 0.2f, 0.2f, 1f));
       ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.25f, 0f, 0f, 1f));
-      if(ImGui.Button(textOff, new(80, 40)))
+      if(ImGui.Button(textOff, new(140, 40)))
       {
         state = false;
       }
@@ -37,7 +37,7 @@ class App
     ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1f));
     ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.5f, 0.2f, 1f));
     ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0f, 0.25f, 0f, 1f));
-    if(ImGui.Button(textOn, new(80, 40)))
+    if(ImGui.Button(textOn, new(140, 40)))
     {
       state = true;
     }
@@ -47,7 +47,6 @@ class App
   float _mouseX, _mouseY;
 
   public void ApplyCamera() {
-    Console.WriteLine(_ctx.Mice[0].ScrollWheels[0].Y);
     float currentMouseX = _ctx.Mice[0].Position.X;
     float currentMouseY = _ctx.Mice[0].Position.Y;
 
@@ -65,6 +64,14 @@ class App
     _mouseY = currentMouseY;
   }
 
+  bool _settingsShown = false;
+
+  public void Settings() {
+    ImGui.Begin("Settings", ref _settingsShown);
+
+    ImGui.End();
+  }
+
   public void Apply()
   {
     if (!ImGui.GetIO().WantCaptureMouse)
@@ -73,9 +80,25 @@ class App
     }
     ImGui.Begin("Visualisation");
 
+    if (!Model.Algorithm.Running) {
+      int selectedIndex = Model.AlgorithmSelectedIndex;
+      string[] list = Model.Algorithms.Select(a => a.GetType().GetCustomAttribute<NameAttribute>()!.Name).ToArray();
+      ImGui.ListBox("Algorithm", ref selectedIndex, list, list.Length);
+      Model.AlgorithmSelectedIndex = selectedIndex;
+
+      ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.3f, 0.3f, 1f));
+      ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.5f, 0.5f, 0.5f, 1f));
+      ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.25f, 0.25f, 0.25f, 1f));
+      if (ImGui.Button("Settings", new(280 + ImGui.GetStyle().ItemSpacing.X , 20)))
+      {
+        _settingsShown = true;
+      }
+      ImGui.PopStyleColor(3);
+    }
+
     {
       bool running = Model.Drive.Running;
-      HugeButton(ref running, "Power on", "Power off");
+      HugeButton(ref running, "Start Disk", "Stop Disk");
       if (running)
       {
         Model.Drive.Start(); 
@@ -86,7 +109,7 @@ class App
     ImGui.SameLine();
     {
       bool running = Model.Algorithm.Running;
-      HugeButton(ref running, "Start", "Abort");
+      HugeButton(ref running, "Execute Tasks", "Abort Tasks");
       Model.Algorithm.Running = running;
     }
 
@@ -134,5 +157,10 @@ class App
     }
 
     ImGui.End();
+
+    if (_settingsShown)
+    {
+      Settings(); 
+    }
   }
 }

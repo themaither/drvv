@@ -12,8 +12,10 @@ class App
     Selection = new() {SelectedIndex = -1};
     Screen = new() { AspectRatio = .5f };
     Tasks = [];
-    // Algorithm = new SSTF(Tasks, Drive) { ColumnBias = 1, RowBias = 40 };
-    Algorithm = new SSTF(Tasks, Drive) { ColumnBias = 1, RowBias = 40 };
+    Algorithms = [
+      new FCFS(Tasks, Drive),
+      new SSTF(Tasks, Drive) { ColumnBias = 1, RowBias = 40 }
+    ];
   }
 
   public Drive Drive { get; set; }
@@ -29,5 +31,9 @@ class App
 
   public List<Model.Task> Tasks { get; set; }
 
-  public Algorithm Algorithm { get; set; }
+  public Algorithm Algorithm => Algorithms[AlgorithmSelectedIndex];
+
+  public Algorithm[] Algorithms { get; }
+
+  public int AlgorithmSelectedIndex { get; set; }
 }
