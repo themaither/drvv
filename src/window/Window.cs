@@ -12,7 +12,7 @@ class Window
 {
   private readonly Silk.NET.Windowing.IWindow _handle;
 
-  public App Model { get; }
+  public App Model { get; private set; }
   public Context RenderContext { get; private set; }
   public Renderer.For.App Renderer { get; private set; }
   public ImGuiController UIContext { get; private set; }
@@ -50,7 +50,10 @@ class Window
     };
     _handle.FramebufferResize += OnFramebufferResize;
     
-    
+    model.ModelChangeRequested += (model) => {
+      ReplaceModel(model);
+    };
+
     _handle.Run();
   }
   #pragma warning restore CS8618
@@ -60,5 +63,14 @@ class Window
     Model!.Screen.AspectRatio = (float)size.X / size.Y;
     Model!.Screen.Resolution = size;
     GL!.Viewport(size);
+  }
+
+  public void ReplaceModel(Model.App model) {
+    model.Screen = Model.Screen;
+    model.ModelChangeRequested += (model) => ReplaceModel(model);
+    Model = model;
+    Renderer = new(model, RenderContext, RenderContext);
+    UI = new(model, InputContext);  
+    Simulation = new(model);
   }
 }

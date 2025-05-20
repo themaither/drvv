@@ -12,9 +12,9 @@ class Drive
     Cylinders = rows * columns;
   }
 
-  public Disk[] Disks { get; }
+  public Disk[] Disks { get; private set; }
 
-  public int Cylinders { get; }
+  public int Cylinders { get; private set; }
 
   public int Rows => Disks.First().Rows;
 

@@ -13,11 +13,13 @@ class App
   public Model.App Model { get; }
   private IInputContext _ctx;
   private Tasks _tasks;
+  private Settings _settings;
   public App(Model.App model, IInputContext context) 
   {
     Model = model;
     _ctx = context;
     _tasks = new(Model.Tasks);
+    _settings = new(Model);
   }
 
   public static void HugeButton(ref bool state, string textOn, string textOff) 
@@ -91,7 +93,7 @@ class App
       ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.25f, 0.25f, 0.25f, 1f));
       if (ImGui.Button("Settings", new(280 + ImGui.GetStyle().ItemSpacing.X , 20)))
       {
-        _settingsShown = true;
+        _settings.Shown = true;
       }
       ImGui.PopStyleColor(3);
     }
@@ -157,10 +159,9 @@ class App
     }
 
     ImGui.End();
-
-    if (_settingsShown)
+    if (_settings.Shown)
     {
-      Settings(); 
+      _settings.Apply();
     }
   }
 }

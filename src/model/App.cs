@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Drvv.Simulation.Algorithms;
 using Silk.NET.Maths;
 
@@ -5,11 +6,10 @@ namespace Drvv.Model;
 
 class App
 {
-  public App()
+  public App() : this(new(1, 8, 16)) {}
+  public App(Drive drive)
   {
-    Drive = new(3, 4, 8);
-    Drive.Disks[1].Position = new(1.5f, 0);
-    Drive.Disks[2].Position = new(3f, 0);
+    Drive = drive;
     Selection = new() {SelectedIndex = -1};
     Screen = new() { AspectRatio = .5f };
     Tasks = [];
@@ -37,4 +37,10 @@ class App
   public Algorithm[] Algorithms { get; }
 
   public int AlgorithmSelectedIndex { get; set; }
+
+  public event Action<App>? ModelChangeRequested;
+
+  public void ChangeModel(App model) {
+    ModelChangeRequested?.Invoke(model);
+  }
 }
