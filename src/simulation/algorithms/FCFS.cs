@@ -1,12 +1,9 @@
-using System.ComponentModel;
 using Drvv.Model;
 
 namespace Drvv.Simulation.Algorithms;
 
 [AlgorithmInfo("FCFS", Description = 
 """
--- Put wikipedia article here --
-
 FCFS (First Come First Serve, don't mistake for FIFO, which is the same thing) --- an algorithm that serves request in order of their arrival time. Great at dealing with pending time of request, but lacks speed if last request was close to R/W head.
 
 """)]

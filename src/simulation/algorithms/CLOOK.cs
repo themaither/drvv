@@ -6,11 +6,11 @@ using Drvv.UI.For;
 
 namespace Drvv.Simulation.Algorithms;
 
-[AlgorithmInfo("LOOK", Description = 
+[AlgorithmInfo("C-LOOK", Description = 
 """
-Look at me in the face, and say "isn't that cool"?
+One known as Circular LOOK --- modified version of infamous algorithm LOOK, which itself is modified version of SCAN. Circular LOOK behaves like ordinary LOOK, but when an average LOOK reverses direction of head traversal, the C-LOOK goes to the set position instead. This implementation move R/W head only to the right side. If head instead moves to the left immediately turn off your computer and inform autorities.
 """)]
-class LOOK : Algorithm
+class CLOOK : Algorithm
 {
   private Drive _drive;
 
@@ -18,7 +18,7 @@ class LOOK : Algorithm
 
   public float ColumnBias => 1;
 
-  public LOOK(List<Model.Task> tasks, Drive drive)
+  public CLOOK(List<Model.Task> tasks, Drive drive)
     : base(tasks)
   {
     _drive = drive;

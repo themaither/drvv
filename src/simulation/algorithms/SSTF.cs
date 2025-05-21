@@ -8,7 +8,7 @@ namespace Drvv.Simulation.Algorithms;
 
 [AlgorithmInfo("SSTF", Description = 
 """
-S Shut The Fuck up
+Shortest Seek Time First, or Shortest Seek First (SSF), a more advanced algorithm than previously appeared FCFS. It uses advanced machine learning and statistical analysis to perform evaluation of one "shortest to seek" task, which is usually one that is shortest to seek, and executes it. AI have tendency to forget "Long seek last" tasks which may harm data integrity. Don't forget to remind algoritm about them!
 """)]
 class SSTF : Algorithm
 {
@@ -16,7 +16,7 @@ class SSTF : Algorithm
 
   public float RowBias { get; set; } = 1;
 
-  public float ColumnBias { get; set; } = 1;
+  public float ColumnBias { get; set; } = 80;
 
   public SSTF(List<Model.Task> tasks, Drive drive)
     : base(tasks)

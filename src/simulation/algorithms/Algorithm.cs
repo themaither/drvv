@@ -25,6 +25,10 @@ abstract class Algorithm
     drive.Disks[sector / drive.Cylinders].Data[drive.Disks[sector / drive.Cylinders].Head.TargetSector % drive.Cylinders] = value;
   }
 
+  public void DirectWrite(Drive drive, int sector, Data value) {
+    drive.Disks[sector / drive.Cylinders].Data[sector % drive.Cylinders] = value;
+  }
+
   public void Read(Drive drive, int sector) {
     Console.WriteLine($"Read {sector}");
   }
