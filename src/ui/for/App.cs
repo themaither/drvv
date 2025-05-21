@@ -76,18 +76,22 @@ class App
 
     if (!Model.Algorithm.Running) {
       int selectedIndex = Model.AlgorithmSelectedIndex;
-      string[] list = Model.Algorithms.Select(a => a.GetType().GetCustomAttribute<NameAttribute>()!.Name).ToArray();
+      string[] list = Model.Algorithms.Select(a => a.GetType().GetCustomAttribute<AlgorithmInfoAttribute>()!.Name).ToArray();
       ImGui.ListBox("Algorithm", ref selectedIndex, list, list.Length);
       Model.AlgorithmSelectedIndex = selectedIndex;
 
       ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.3f, 0.3f, 1f));
       ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.5f, 0.5f, 0.5f, 1f));
       ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.25f, 0.25f, 0.25f, 1f));
+
+      ImGui.TextWrapped(Model.Algorithm.GetType().GetCustomAttribute<AlgorithmInfoAttribute>()!.Description);
+
       if (ImGui.Button("Settings", new(280 + ImGui.GetStyle().ItemSpacing.X , 20)))
       {
         _settings.Shown = true;
       }
       ImGui.PopStyleColor(3);
+
     }
 
     {

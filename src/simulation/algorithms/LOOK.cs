@@ -6,19 +6,21 @@ using Drvv.UI.For;
 
 namespace Drvv.Simulation.Algorithms;
 
-[AlgorithmInfo("SSTF", Description = 
+[AlgorithmInfo("LOOK", Description = 
 """
-S Shut The Fuck up
+Look at me in the face, and say "isn't that cool"?
 """)]
-class SSTF : Algorithm
+class LOOK : Algorithm
 {
   private Drive _drive;
 
-  public float RowBias { get; set; } = 1;
+  public float RowBias => _drive.Columns * _drive.Disks.Count();
 
-  public float ColumnBias { get; set; } = 1;
+  public float ColumnBias => 1;
 
-  public SSTF(List<Model.Task> tasks, Drive drive)
+  private int _lookingDirection = 1;
+
+  public LOOK(List<Model.Task> tasks, Drive drive)
     : base(tasks)
   {
     _drive = drive;
@@ -29,22 +31,28 @@ class SSTF : Algorithm
     return x >= 0 ? x : x + max;
   }
 
-  private Model.Task PickClosestForDrive(Model.Drive drive) {
-    var task = _tasks
+  private Model.Task? PickClosestForDrive(Model.Drive drive) {
+    var tasks = _tasks
       .Select(a =>
         (
           bias: Bias(a.Sector % drive.Cylinders, drive.Disks.First().Head.TargetSector, drive),
           task: a
         )
       )
-      .OrderBy(a => a.bias)
-      .First();
+      .Where(a => a.bias > 0)
+      .OrderBy(a => a.bias);
+
+    if (tasks.Count() == 0) {
+      return null;
+    }
+
+    var task = tasks.First();
 
     return task.task;
   }
 
   private float Bias(int sector, int headSector, Model.Drive drive) {
-    return ColumnBias * Wrap((sector % drive.Columns) - (headSector % drive.Columns), drive.Columns) + RowBias * Math.Abs(sector / drive.Columns - headSector / drive.Columns);
+    return 1 + ColumnBias * Wrap((sector % drive.Columns) - (headSector % drive.Columns), drive.Columns) + RowBias * (sector / drive.Columns - headSector / drive.Columns);
   }
 
   protected override void OnUpdate(float deltaTime)
@@ -62,12 +70,21 @@ class SSTF : Algorithm
 
     var targetTask = PickClosestForDrive(_drive);
 
+    if (targetTask == null)
+    {
+      foreach (var disk in _drive.Disks)
+      {
+        disk.Head.TargetRow = 0; 
+      }
+      return;
+    }
+
     for (int i = 0; i < _drive.Disks.Length; i++)
     {
       Disk? disk = _drive.Disks[i];
-      
       disk.Head.TargetRow = 
        ((targetTask.Sector) % (disk.Rows * disk.Columns)) / (int)disk.Columns;
+
       Execute(_drive, i, targetTask);
     }
   }

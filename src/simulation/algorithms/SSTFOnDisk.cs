@@ -7,8 +7,6 @@ namespace Drvv.Simulation.Algorithms;
 
 class SSTFOnDisk : Algorithm
 {
-  private List<Model.Task> _tasks;
-
   private Disk _disk;
 
   public float RowBias { get; set; } = 1;
@@ -16,8 +14,8 @@ class SSTFOnDisk : Algorithm
   public float ColumnBias { get; set; } = 1;
 
   public SSTFOnDisk(List<Model.Task> tasks, Disk disk)
+    : base(tasks)
   {
-    _tasks = tasks;
     _disk = disk;
   }
 

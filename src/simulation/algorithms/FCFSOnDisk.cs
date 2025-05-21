@@ -4,13 +4,12 @@ namespace Drvv.Simulation.Algorithms;
 
 class FCFSOnDisk : Algorithm
 {
-  private List<Model.Task> _tasks;
-
   private Disk _disk;
 
   private int _offset;
 
   public FCFSOnDisk(List<Model.Task> tasks, Disk disk, int offset)
+    : base(tasks)
   {
     _tasks = tasks;
     _disk = disk;
