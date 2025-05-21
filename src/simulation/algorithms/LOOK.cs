@@ -18,8 +18,6 @@ class LOOK : Algorithm
 
   public float ColumnBias => 1;
 
-  private int _lookingDirection = 1;
-
   public LOOK(List<Model.Task> tasks, Drive drive)
     : base(tasks)
   {
