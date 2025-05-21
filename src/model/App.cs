@@ -16,6 +16,7 @@ class App
     Algorithms = [
       new FCFS(Tasks, Drive),
       new SSTF(Tasks, Drive) { ColumnBias = 1, RowBias = 80 },
+      new LOOK(Tasks, Drive),
       new CLOOK(Tasks, Drive),
       new RA(Tasks, Drive)
     ];
