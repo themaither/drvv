@@ -4,7 +4,7 @@ namespace Drvv.Simulation.Algorithms;
 
 [AlgorithmInfo("SCAN", Description = 
 """
-
+SCAN, which is abreviation for SCelevator Algorithm N, does everything what an ordinary elevator cat --- go up, or down. In this case head takes ride and executes tasks it encounters on its way.
 """)]
 class SCAN : Algorithm
 {

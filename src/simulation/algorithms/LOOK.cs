@@ -4,7 +4,7 @@ namespace Drvv.Simulation.Algorithms;
 
 [AlgorithmInfo("LOOK", Description = 
 """
-
+LOOK algortihm LOOKs like a SCAN algorithm, but is considered more optimized, because now riders know what elevator buttons used for.
 """)]
 class LOOK : Algorithm
 {

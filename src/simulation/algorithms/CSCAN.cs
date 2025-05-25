@@ -4,7 +4,7 @@ namespace Drvv.Simulation.Algorithms;
 
 [AlgorithmInfo("C-SCAN", Description = 
 """
-
+C-SCAN is modification of SCAN algorithm, which replaces elevator with ferris wheel.
 """)]
 class CSCAN : Algorithm
 {
