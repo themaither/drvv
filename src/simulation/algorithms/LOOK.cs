@@ -1,8 +1,4 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization.Metadata;
 using Drvv.Model;
-using Drvv.UI.For;
 
 namespace Drvv.Simulation.Algorithms;
 
@@ -42,7 +38,7 @@ class LOOK : Algorithm
       .Where(a => a.bias > 0)
       .OrderBy(a => a.bias);
 
-    if (tasks.Count() == 0) {
+    if (!tasks.Any()) {
       return null;
     }
 

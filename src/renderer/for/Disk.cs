@@ -1,5 +1,3 @@
-using System.Numerics;
-using Drvv.Model;
 using Drvv.Primitives;
 using Silk.NET.Maths;
 

@@ -1,4 +1,3 @@
-using System.Reflection.PortableExecutable;
 using Drvv.Model;
 
 namespace Drvv.Simulation.Algorithms;

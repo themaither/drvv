@@ -1,8 +1,3 @@
-using System.Drawing;
-using Drvv.Model;
-using Drvv.Primitives;
-using Silk.NET.OpenGL;
-
 namespace Drvv.Renderer.For;
 
 class App

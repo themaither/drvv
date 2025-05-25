@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using Drvv.Simulation.Algorithms;
 using Silk.NET.Maths;
 
@@ -16,6 +15,8 @@ class App
     Algorithms = [
       new FCFS(Tasks, Drive),
       new SSTF(Tasks, Drive) { ColumnBias = 1, RowBias = 80 },
+      new SCAN(Tasks, Drive),
+      new CSCAN(Tasks, Drive),
       new LOOK(Tasks, Drive),
       new CLOOK(Tasks, Drive),
       new RA(Tasks, Drive)

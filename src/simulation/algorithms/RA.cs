@@ -1,4 +1,3 @@
-
 using Drvv.Model;
 
 namespace Drvv.Simulation.Algorithms;
