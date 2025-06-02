@@ -11,42 +11,25 @@ namespace Drvv.UI.For;
 class App
 {
   public Model.App Model { get; }
-  private IInputContext _ctx;
-  private Tasks _tasks;
-  private Settings _settings;
+  private readonly IInputContext _ctx;
+  private readonly Tasks _tasks;
+  private readonly NewDriveDialog _newDialog;
+  private readonly Drive _drive;
+  private readonly Algorithm _algorithm;
+  private readonly Presets _presets;
+  float _mouseX, _mouseY;
   public App(Model.App model, IInputContext context) 
   {
     Model = model;
     _ctx = context;
+    _newDialog = new(Model);
+    _drive = new(Model.Drive);
+    _drive.NewPressed += (o, e) => _newDialog.Shown = true;
+    _algorithm = new(Model);
+    _presets = new(Model);
     _tasks = new(Model.Tasks);
-    _settings = new(Model);
+    _tasks.ShowExamples += (o, e) => _presets.Shown = true;
   }
-
-  public static void HugeButton(ref bool state, string textOn, string textOff) 
-  {
-    if (state)
-    {
-      ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1f));
-      ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.5f, 0.2f, 0.2f, 1f));
-      ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.25f, 0f, 0f, 1f));
-      if(ImGui.Button(textOff, new(140, 40)))
-      {
-        state = false;
-      }
-      ImGui.PopStyleColor(3);
-      return;
-    }
-    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1f));
-    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.5f, 0.2f, 1f));
-    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0f, 0.25f, 0f, 1f));
-    if(ImGui.Button(textOn, new(140, 40)))
-    {
-      state = true;
-    }
-    ImGui.PopStyleColor(3);
-  }
-
-  float _mouseX, _mouseY;
 
   public void ApplyCamera() {
     float currentMouseX = _ctx.Mice[0].Position.X;
@@ -65,99 +48,25 @@ class App
     _mouseX = currentMouseX;
     _mouseY = currentMouseY;
   }
-
+ 
   public void Apply()
   {
     if (!ImGui.GetIO().WantCaptureMouse)
     {
       ApplyCamera();
     }
-    ImGui.Begin("Visualisation");
 
-    if (!Model.Algorithm.Running) {
-      int selectedIndex = Model.AlgorithmSelectedIndex;
-      string[] list = Model.Algorithms.Select(a => a.GetType().GetCustomAttribute<AlgorithmInfoAttribute>()!.Name).ToArray();
-      ImGui.ListBox("Algorithm", ref selectedIndex, list, list.Length);
-      Model.AlgorithmSelectedIndex = selectedIndex;
-
-      ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.3f, 0.3f, 1f));
-      ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.5f, 0.5f, 0.5f, 1f));
-      ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.25f, 0.25f, 0.25f, 1f));
-
-      ImGui.TextWrapped(Model.Algorithm.GetType().GetCustomAttribute<AlgorithmInfoAttribute>()!.Description);
-
-      if (ImGui.Button("Settings", new(280 + ImGui.GetStyle().ItemSpacing.X , 20)))
-      {
-        _settings.Shown = true;
-      }
-      ImGui.PopStyleColor(3);
-
-    }
-
+    if (!_newDialog.Shown)
     {
-      bool running = Model.Drive.Running;
-      HugeButton(ref running, "Start Disk", "Stop Disk");
-      if (running)
-      {
-        Model.Drive.Start(); 
-      } else {
-        Model.Drive.Stop();
-      }
-    }
-    ImGui.SameLine();
-    {
-      bool running = Model.Algorithm.Running;
-      HugeButton(ref running, "Execute Tasks", "Abort Tasks");
-      Model.Algorithm.Running = running;
-    }
-
-    _tasks.Apply();
-    ImGui.End();
-
-    ImGui.Begin("Examples");
-
-    if (ImGui.Button("Deep format"))
-    {
-      for (int i = 0; i < Model.Drive.Cylinders * Model.Drive.Disks.Length; i++)
-      {
-        Model.Tasks.Add(new WriteTask() { Sector = i, Value = new Data(0) });
-      }
-    }
-    if (ImGui.Button("Write gibberish"))
-    {
-      Random rng = new();
-      for (int i = 0; i < Model.Drive.Cylinders * Model.Drive.Disks.Length; i++)
-      {
-        Model.Tasks.Add(new WriteTask() { Sector = i, Value = new Data(rng.Next(8)) });
-      }
-    }
-    if (ImGui.Button("FCFS Test case"))
-    {
-      for (int i = 0; i < Model.Drive.Disks.First().Columns; i++)
-      {
-        Model.Tasks.Add(new WriteTask() { Sector = i, Value = new Data(2) });
-        Model.Tasks.Add(new WriteTask() { Sector = i + Model.Drive.Disks.First().Columns * 4, Value = new Data(3) });
-      }
+      _drive.Apply();
+      _algorithm.Apply();
+      _tasks.Apply();
+      _presets.Apply();
       
     }
-    if (!Model.Algorithm.Running && ImGui.Button("Shuffle"))
+    if (_newDialog.Shown)
     {
-      Random rng = new();
-      for (int i = 0; i < Model.Tasks.Count; i++)
-      {
-        int pickedIndex = rng.Next(0, (int)Model.Disk.Rows * (int)Model.Disk.Columns);
-        (Model.Tasks[i], Model.Tasks[pickedIndex]) = (Model.Tasks[pickedIndex], Model.Tasks[i]);
-      }
-    }
-    if (!Model.Algorithm.Running && ImGui.Button("Stable shuffle"))
-    {
-      //TODO:
-    }
-
-    ImGui.End();
-    if (_settings.Shown)
-    {
-      _settings.Apply();
+      _newDialog.Apply();
     }
   }
 }

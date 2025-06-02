@@ -2,13 +2,13 @@ using ImGuiNET;
 
 namespace Drvv.UI.For;
 
-class Settings
+class NewDriveDialog
 {
   private bool _shown = false;
 
   private int _tracks = 2, _sectors = 4, _disks = 1;
 
-  public Settings(Model.App model)
+  public NewDriveDialog(Model.App model)
   {
     Model = model;
   }
@@ -30,7 +30,8 @@ class Settings
 
   public void Apply()
   {
-    ImGui.Begin("Settings", ref _shown);
+    var windowBounds = ImGui.GetWindowContentRegionMax() - ImGui.GetWindowContentRegionMin();
+    ImGui.Begin("New", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse);
 
     {
       ImGui.InputInt("Tracks", ref _tracks);
@@ -39,7 +40,11 @@ class Settings
       if (_tracks < 1) _tracks = 1; 
       if (_sectors < 1) _sectors = 1; 
       if (_disks < 0) _disks = 1; 
-      if(ImGui.Button("Create hard drive")) {
+      if(ImGui.Button("Cancel")) {
+        Shown = false;
+      }
+      ImGui.SameLine(windowBounds.X - 50);
+      if(ImGui.Button("Create")) {
         Model.ChangeModel(new Model.App(CreateDrive(_disks, _tracks, _sectors)));
       }
     }

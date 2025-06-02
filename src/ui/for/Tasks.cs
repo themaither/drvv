@@ -11,15 +11,23 @@ class Tasks
     Model = model;
   }
 
+  public event EventHandler? ShowExamples;
+
   public void Apply()
   {
+    ImGui.Begin("Tasks");
+
     ImGui.AlignTextToFramePadding();
-    ImGui.Text("Tasks");
-    ImGui.SameLine();
     if (ImGui.Button("Clear"))
     {
       Model.Clear();
     }
+    ImGui.SameLine();
+    if (ImGui.Button("Show Presets"))
+    {
+      ShowExamples?.Invoke(this, new());
+    }
+
     if (ImGui.Button("Add READ"))
     {
       Model.Add(new Model.ReadTask());
@@ -84,5 +92,7 @@ class Tasks
       ImGui.PopID();
     }
     ImGui.EndChild();
+
+    ImGui.End();
   }
 }
