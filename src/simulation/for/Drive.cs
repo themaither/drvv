@@ -1,3 +1,5 @@
+using Drvv.Model;
+
 namespace Drvv.Simulation.For;
 
 class Drive

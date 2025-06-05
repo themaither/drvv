@@ -20,8 +20,7 @@ class FCFS : Algorithm
     _diskAlgorithms = new(drive.Disks.Length);
     for (int i = 0; i < _drive.Disks.Length; i++)
     {
-      Disk disk = _drive.Disks[i];
-      _diskAlgorithms.Add(new(_tasks, disk, i * _drive.Cylinders));
+      _diskAlgorithms.Add(new(_tasks, i, _drive, this, i * _drive.Cylinders));
     }
   }
 

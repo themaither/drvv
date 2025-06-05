@@ -5,6 +5,8 @@ namespace Drvv.Model;
 
 class App
 {
+  private SerialWriter _algorithmWriter;
+
   public App() : this(new(1, 8, 16)) {}
   public App(Drive drive)
   {
@@ -21,6 +23,12 @@ class App
       new CLOOK(Tasks, Drive),
       new RA(Tasks, Drive)
     ];
+    Serial = new();
+    _algorithmWriter = new(Serial, "drive");
+    foreach (var algorithm in Algorithms)
+    {
+      algorithm.Log += (s) => _algorithmWriter.WriteLine(s);
+    }
   }
 
   public Drive Drive { get; set; }
@@ -43,6 +51,8 @@ class App
   public int AlgorithmSelectedIndex { get; set; }
 
   public event Action<App>? ModelChangeRequested;
+
+  public Serial Serial { get; set; }
 
   public void ChangeModel(App model) {
     ModelChangeRequested?.Invoke(model);

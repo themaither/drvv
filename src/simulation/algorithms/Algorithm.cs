@@ -6,6 +6,8 @@ abstract class Algorithm
 {
   public bool Running { get; set; }
 
+  public event Action<string>? Log;
+
   protected List<Model.Task> _tasks;
 
   protected Algorithm(List<Model.Task> tasks)
@@ -22,14 +24,15 @@ abstract class Algorithm
 
   public void Write(Drive drive, int sector, Data value) {
     drive.Disks[sector / drive.Cylinders].Data[drive.Disks[sector / drive.Cylinders].Head.TargetSector % drive.Cylinders] = value;
+    Log?.Invoke($"Written [D={value.Value}] to sector {sector}");
   }
 
-  public void DirectWrite(Drive drive, int sector, Data value) {
+  public static void DirectWrite(Drive drive, int sector, Data value) {
     drive.Disks[sector / drive.Cylinders].Data[sector % drive.Cylinders] = value;
   }
 
   public void Read(Drive drive, int sector) {
-    Console.WriteLine($"Read {sector}");
+    Log?.Invoke($"Read [D={drive.Disks[sector / drive.Cylinders].Data[sector % drive.Cylinders].Value}] from {sector}");
   }
 
   public void Execute(Drive drive, int diskIndex, Model.Task task) {

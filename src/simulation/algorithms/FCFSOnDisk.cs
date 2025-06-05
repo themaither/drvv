@@ -4,21 +4,27 @@ namespace Drvv.Simulation.Algorithms;
 
 class FCFSOnDisk : Algorithm
 {
-  private Disk _disk;
+  private int _diskIndex;
+
+  private Drive _drive;
+
+  private Algorithm _parent;
 
   private int _offset;
 
-  public FCFSOnDisk(List<Model.Task> tasks, Disk disk, int offset)
+  public FCFSOnDisk(List<Model.Task> tasks, int diskIndex, Drive drive, Algorithm parent, int offset)
     : base(tasks)
   {
     _tasks = tasks;
-    _disk = disk;
+    _diskIndex = diskIndex;
+    _drive = drive;
+    _parent = parent;
     _offset = offset;
   }
 
   protected override void OnUpdate(float deltaTime)
   {
-    _disk.Running = true;
+    _drive.Disks[_diskIndex].Running = true;
     if (_tasks.Count == 0) 
     {
       // _disk.Head.TargetRow = -1;
@@ -26,19 +32,19 @@ class FCFSOnDisk : Algorithm
       return;
     }
 
-    if (_disk.Speed <= 0.9f)
+    if (_drive.Disks[_diskIndex].Speed <= 0.9f)
       return;
 
-    _disk.Head.TargetRow = ((_tasks.First().Sector) % (_disk.Rows * _disk.Columns)) / (int)_disk.Columns;
-    if (_disk.Head.TargetSector == _tasks.First().Sector - _offset)
+    _drive.Disks[_diskIndex].Head.TargetRow = ((_tasks.First().Sector) % (_drive.Disks[_diskIndex].Rows * _drive.Disks[_diskIndex].Columns)) / (int)_drive.Disks[_diskIndex].Columns;
+    if (_drive.Disks[_diskIndex].Head.TargetSector == _tasks.First().Sector - _offset)
     {
       if (_tasks.First() is ReadTask read)
       {
-        Console.WriteLine($"Read {_disk.Data[_disk.Head.TargetSector].Value}");
+        _parent.Read(_drive, _drive.Disks[_diskIndex].Head.TargetSector + _drive.Cylinders * _diskIndex);
       } 
       else if (_tasks.First() is WriteTask write)
       {
-        _disk.Data[_disk.Head.TargetSector] = write.Value;
+        _parent.Write(_drive, _drive.Disks[_diskIndex].Head.TargetSector + _drive.Cylinders * _diskIndex, write.Value);
       }
       _tasks.Remove(_tasks.First());
     }

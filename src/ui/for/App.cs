@@ -17,6 +17,7 @@ class App
   private readonly Drive _drive;
   private readonly Algorithm _algorithm;
   private readonly Presets _presets;
+  private readonly Serial _serial;
   float _mouseX, _mouseY;
   public App(Model.App model, IInputContext context) 
   {
@@ -29,6 +30,7 @@ class App
     _presets = new(Model);
     _tasks = new(Model.Tasks, model.Algorithm);
     _tasks.ShowExamples += () => _presets.Shown = true;
+    _serial = new(model.Serial);
   }
 
   public void ApplyCamera() {
@@ -62,7 +64,8 @@ class App
       _algorithm.Apply();
       _tasks.Apply();
       _presets.Apply();
-      
+      _serial.Apply();
+      ImGui.ShowDemoWindow();
     }
     if (_newDialog.Shown)
     {
