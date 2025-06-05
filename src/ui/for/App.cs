@@ -27,8 +27,8 @@ class App
     _drive.NewPressed += (o, e) => _newDialog.Shown = true;
     _algorithm = new(Model);
     _presets = new(Model);
-    _tasks = new(Model.Tasks);
-    _tasks.ShowExamples += (o, e) => _presets.Shown = true;
+    _tasks = new(Model.Tasks, model.Algorithm);
+    _tasks.ShowExamples += () => _presets.Shown = true;
   }
 
   public void ApplyCamera() {
