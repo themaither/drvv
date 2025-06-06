@@ -58,7 +58,7 @@ class Presets
       Random rng = new();
       for (int i = 0; i < Model.Tasks.Count; i++)
       {
-        int pickedIndex = rng.Next(0, (int)Model.Disk.Rows * (int)Model.Disk.Columns);
+        int pickedIndex = rng.Next(0, Model.Tasks.Count);
         (Model.Tasks[i], Model.Tasks[pickedIndex]) = (Model.Tasks[pickedIndex], Model.Tasks[i]);
       }
     }

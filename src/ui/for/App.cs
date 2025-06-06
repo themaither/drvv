@@ -28,7 +28,7 @@ class App
     _drive.NewPressed += (o, e) => _newDialog.Shown = true;
     _algorithm = new(Model);
     _presets = new(Model);
-    _tasks = new(Model.Tasks, model.Algorithm);
+    _tasks = new(Model.Tasks, model.BoxedAlgorithm);
     _tasks.ShowExamples += () => _presets.Shown = true;
     _serial = new(model.Serial);
   }
@@ -65,7 +65,6 @@ class App
       _tasks.Apply();
       _presets.Apply();
       _serial.Apply();
-      ImGui.ShowDemoWindow();
     }
     if (_newDialog.Shown)
     {

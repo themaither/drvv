@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Drvv.Simulation.Algorithms;
 using Silk.NET.Maths;
 
@@ -23,6 +24,7 @@ class App
       new CLOOK(Tasks, Drive),
       new RA(Tasks, Drive)
     ];
+    BoxedAlgorithm = new(Algorithm);
     Serial = new();
     _algorithmWriter = new(Serial, "drive");
     foreach (var algorithm in Algorithms)
@@ -46,9 +48,21 @@ class App
 
   public Algorithm Algorithm => Algorithms[AlgorithmSelectedIndex];
 
+  public Box<Algorithm> BoxedAlgorithm { get; }
+
   public Algorithm[] Algorithms { get; }
 
-  public int AlgorithmSelectedIndex { get; set; }
+  private int _algorithmSelectedIndex;
+
+  public int AlgorithmSelectedIndex
+  {
+    get => _algorithmSelectedIndex;
+    set 
+    {
+      _algorithmSelectedIndex = value;
+      BoxedAlgorithm.Value = Algorithm;
+    }
+  }
 
   public event Action<App>? ModelChangeRequested;
 

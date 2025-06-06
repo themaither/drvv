@@ -7,7 +7,7 @@ class Tasks
 {
   public List<Model.Task> Model { get; }
 
-  public Tasks(List<Model.Task> model, Simulation.Algorithms.Algorithm algorithm)
+  public Tasks(List<Model.Task> model, Box<Simulation.Algorithms.Algorithm> algorithm)
   {
     Model = model;
     _algorithm = algorithm;
@@ -15,7 +15,7 @@ class Tasks
 
   public event Action? ShowExamples;
 
-  private Simulation.Algorithms.Algorithm _algorithm;
+  private Box<Simulation.Algorithms.Algorithm> _algorithm;
 
   public void Apply()
   {
@@ -45,10 +45,10 @@ class Tasks
     }
 
     {
-      bool running = _algorithm.Running;
+      bool running = _algorithm.Value.Running;
       ImGui.SetCursorPos(new(160, 25));
       Global.SwitchButton(ref running, "Execute", "Abort", new(windowBounds.X - 152, 45));
-      _algorithm.Running = running;
+      _algorithm.Value.Running = running;
     }
 
     ImGui.BeginChild("list", new(0, 0), ImGuiChildFlags.Border);
