@@ -40,12 +40,27 @@ class Presets
         Model.Tasks.Add(new WriteTask() { Sector = i, Value = new Data(rng.Next(8)) });
       }
     }
-    if (ImGui.Button("FCFS Test case"))
+    if (ImGui.Button("FCFS Worst case"))
     {
       for (int i = 0; i < Model.Drive.Disks.First().Columns; i++)
       {
         Model.Tasks.Add(new WriteTask() { Sector = i, Value = new Data(2) });
         Model.Tasks.Add(new WriteTask() { Sector = i + Model.Drive.Disks.First().Columns * 4, Value = new Data(3) });
+      }
+    }
+    if (ImGui.Button("SSTF Worst case"))
+    {
+      foreach (var disk in Model.Drive.Disks)
+      {
+        disk.Head.TargetRow = -1; 
+      }
+      Model.Tasks.Add(new WriteTask() { Sector = 0, Value = new Data(2) });
+      for (int j = 0; j < Model.Drive.Rows / 2; j++)
+      {
+        for (int i = 0; i < Model.Drive.Columns; i++)
+        {
+          Model.Tasks.Add(new WriteTask() { Sector = Model.Drive.Cylinders / 2 + j * Model.Drive.Columns + i, Value = new Data(1) });
+        }
       }
     }
 
